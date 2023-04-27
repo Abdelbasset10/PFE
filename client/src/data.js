@@ -19,6 +19,7 @@ export const people = [
         pfeType:"Web",
         section:"ACAD C",
         
+        
     },
     {
         id:3,
@@ -32,6 +33,76 @@ export const people = [
     },
     {
         id:4,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+    {
+        id:5,
+        userType:"Student",
+        email:"basset.rezazi26@gmail.com",
+        name:"Rezazi Mohamed Abdelbasset",
+        lvl:"L3",
+        pfeType:"Web",
+        section:"ACAD C",
+        
+    },
+     {
+        id:5,
         userType:"Student",
         email:"basset.rezazi26@gmail.com",
         name:"Rezazi Mohamed Abdelbasset",

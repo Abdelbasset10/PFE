@@ -33,6 +33,15 @@ const getAllTeachers = async (req,res) => {
     }
 }
 
+const getEncadreurs = async (req,res) => {
+    try {
+        const allTeachers = await Teacher.find({isVision:true})
+        res.status(200).json(allTeachers)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
 const deleteTeacher = async (req,res) => {
     try {
         const {id} = req.params
@@ -74,7 +83,9 @@ const beVision = async (req,res) => {
             return res.status(400).json({message:"You are already visioned"})
         }
         await teacher.updateOne({isVision:true})
-        res.status(200).json({message:"You have been add your self in Encadreurs List"})
+        const updatedTeacher = await Teacher.findById(teacher._id)
+        const token = jwt.sign({userId:updatedTeacher._id,userName:updatedTeacher.name,userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
+        return res.status(200).json({token,user:updatedTeacher})
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -88,11 +99,13 @@ const beNoVision = async (req,res) => {
             return res.status(400).json({message:"You are already not visioned"})
         }
         await teacher.updateOne({isVision:false})
-        res.status(200).json({message:"You have been remove your self from Encadreurs List"})
+        const updatedTeacher = await Teacher.findById(teacher._id)
+        const token = jwt.sign({userId:updatedTeacher._id,userName:updatedTeacher.name,userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
+        return res.status(200).json({token,user:updatedTeacher})
     } catch (error) {
         res.status(404).json({message:error.message})
     }
 }
 
 
-module.exports = {getTeacher, getAllTeachers, updateTeacher, deleteTeacher, searchTeacher, getTeachersByField, beVision, beNoVision}
+module.exports = {getTeacher, getAllTeachers, getEncadreurs, updateTeacher, deleteTeacher, searchTeacher, getTeachersByField, beVision, beNoVision}

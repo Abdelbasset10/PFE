@@ -135,7 +135,9 @@ const addTeacher = async (req,res) => {
         await me.updateOne({$push:{hisTeacher:teacher}})
         await myBinome.updateOne({$push:{hisTeacher:teacher}})
         await teacher.updateOne({$push : {studentsVision:[me,myBinome]}})
-        return res.status(200).json({message:"You have add the teacher in your encadrers succefully !"})
+        const updatedMe = await Student.findById(me._id)
+        const token = jwt.sign({userId:updatedMe._id,userName:updatedMe.name,userType:'student'},'JWT_SECRET',{expiresIn:'1d'})
+        return res.status(200).json({token,user:updatedMe})
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -158,8 +160,10 @@ const removeTeacher = async (req,res) => {
         await myBinome.updateOne({$pull : {hisTeacher:teacher._id}})
         await teacher.updateOne({$pull : {studentsVision:me._id}})
         await teacher.updateOne({$pull : {studentsVision:myBinome._id}})
-        return res.status(200).json({message:"You have remove the teacher from your encadrers succefully !"})
-    } catch (error) {
+        const updatedMe = await Student.findById(me._id)
+        const token = jwt.sign({userId:updatedMe._id,userName:updatedMe.name,userType:'student'},'JWT_SECRET',{expiresIn:'1d'})
+        return res.status(200).json({token,user:updatedMe})
+        } catch (error) {
         res.status(404).json({message:error.message})
     }
 }

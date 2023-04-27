@@ -15,6 +15,7 @@ import Announces from './pages/Announces'
 import { ToastContainer} from 'react-toastify';
 import { setUser } from './redux/features/authSlice'
 import { allStudents } from './redux/features/studentSlice'
+import Messenger from './pages/Messenger'
 
 
 const App = () => {
@@ -39,19 +40,16 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />     
       </Routes>
-        <Navbar />
-        <div className='flex' >
-          <Sidebar />
+        <Navbar />          
           <Routes>
             <Route exact path='/' element={<Subjects />} />  
             <Route exact path='/announces' element={<Announces />} />  
             <Route  path='/binomes' element={<Binomes />} />  
             <Route  path='/teachers' element={<Teachers />} />  
             <Route  path='/profile/:id' element={<Profile />} />  
+            <Route  path='/messenger' element={<Messenger />}/>
           </Routes>
-      </div>
       <ToastContainer />
-     
     </BrowserRouter>
   )
 }

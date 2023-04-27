@@ -82,6 +82,8 @@ const ProfileModal = () => {
                                 <option  value="GTR">GTR</option>
                             </select>
                         </div>
+                    </div>
+                )}
                         <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
                             <label>Choose Your Lvl</label>
                             <div className='flex gap-8' >
@@ -95,8 +97,8 @@ const ProfileModal = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    
+                
                 <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between items-center ' >
                             <label>Choose Your PFE Type</label>
                                 <div className='grid grid-cols-2' >

@@ -10,10 +10,12 @@ import { allSubjects, deleteSubject } from '../redux/features/subjectSlice'
 import {toast} from 'react-toastify'
 
 const Subject = ({s}) => {
+
+  
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const User = useSelector((state)=>state.auth?.authData?.user)
-  const subjectId = s._id
+  const subjectId = s?._id
   
   const [teacher,setTeacher] = useState(null)
   const [show,setShow] = useState(false)
@@ -24,7 +26,7 @@ const Subject = ({s}) => {
   }
   useEffect(()=>{
     const getTheTeacher = async () =>{
-      const {data} = await getTeacher(s.teacher)
+      const {data} = await getTeacher(s?.teacher)
       setTeacher(data)
     }
     getTheTeacher()
@@ -47,7 +49,7 @@ const Subject = ({s}) => {
               <p>24/03/2023</p>
             </div>
           </div>
-          {User._id === s.teacher &&  (
+          {User._id === s?.teacher &&  (
             <div className='relative' >
               <FiMoreHorizontal className='text-3xl text-pfe-blue cursor-pointer' onClick={()=>setShow(!show)}/>
               {show && (
@@ -61,7 +63,7 @@ const Subject = ({s}) => {
         </div>
         <p className='font-bold text-pfe-blue mt-1' >{s?.title}</p>
         <p className='text-sm sm:text-base' >{s?.description}</p>
-        <p className='text-pfe-blue' >#{s?.subjectField}</p>
+        <p className='text-pfe-blue' >#{s?.subjectField} #{s?.pfeLvl}</p>
       </div>
     </div>
   )

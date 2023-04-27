@@ -3,9 +3,9 @@ const Teacher = require('../models/Teacher')
 
 const createSubject = async (req,res) => {
     try {
-        const {title,description,subjectField} = req.body
+        const {title,description,subjectField,pfeLvl} = req.body
         const newSubject = new Subject({
-            title,description,subjectField,teacher:req.user.userId
+            title,description,subjectField,pfeLvl,teacher:req.user.userId
         })
         await newSubject.save()
         res.status(201).json(newSubject)
@@ -64,4 +64,18 @@ const getSubjectByField = async (req,res) => {
     }
 }
 
-module.exports = {createSubject, getAllSubjects, getTeacherSubjects, updateSubject, deleteSubject, getSubjectByField}
+const filterSubjects = async (req,res) => {
+    try {
+        const {filtredSubjects} = req.body;
+        console.log(req.body)
+        const getSubjects = await Promise.all(filtredSubjects.map(async (element)=>{
+            const subject = await Subject.find({subjectField:element})
+            return subject
+        }))
+        res.json(getSubjects)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+module.exports = {createSubject, getAllSubjects, getTeacherSubjects, updateSubject, deleteSubject, getSubjectByField, filterSubjects}

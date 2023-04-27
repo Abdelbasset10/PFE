@@ -17,6 +17,10 @@ const subjectSchema = mongoose.Schema({
     picture:{
         type:String,
         default:""
+    },
+    pfeLvl:{
+        type:String,
+        enum:["L3","M2"]
     }
 })
 

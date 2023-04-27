@@ -10,7 +10,7 @@ export const allStudents = createAsyncThunk("allStudents/student",async (_,{reje
     }
 })
 
-export const getStudent = createAsyncThunk("getStudent/student",async (id,{rejectWithValue}) => {
+export const getTheStudent = createAsyncThunk("getTheStudent/student",async (id,{rejectWithValue}) => {
     try {
         const {data} = await api.getStudent(id)
         return data
@@ -49,17 +49,165 @@ export const addBinome = createAsyncThunk("addBinome/student",async ({UserId,use
     }
 })
 
+export const beNoBinome = createAsyncThunk("beNoBinome/student",async ({UserId,userId,toast},{rejectWithValue}) => {
+    try {
+        const {data} = await api.beNoBinome(UserId,userId)
+        toast.warning("you have been remove that Student from your Binome")
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
+    try {
+        const {data} = await api.addEncadreur(UserId,binomeId,userId)
+        toast.info("you have been Add that Teacher to be your Encadreur")
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const removeEncadreur = createAsyncThunk("removeEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
+    try {
+        const {data} = await api.removeEncadreur(UserId,binomeId,userId)
+        toast.warning("you have been Add that Teacher to be your Encadreur")
+        return data
+    } catch (error) {
+        toast.error(error.response.data.message)
+        return rejectWithValue(error.response.data)
+    }
+})
 
 const studentSlice = createSlice({
     name:"student",
     initialState:{
         noBinomes:[],
+        noBinomesCopy:[],
         students:[],
         student:null,
         isLoading:false,
         error:""
     },
     reducers:{
+        filterStudent :(state,action) => {
+            var filtredBinomes = [];
+            var filtredBinomes2 = [];
+            var filtredBinomes3 = [];
+            if(action.payload.section.length >0 && action.payload.subjectType.length === 0 && !action.payload.studentLvl){
+                console.log("section")
+                action.payload.section.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.section === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                state.noBinomes = filtredBinomes
+            }else if(action.payload.section.length === 0 && action.payload.subjectType.length > 0 && !action.payload.studentLvl){
+                console.log("pfetype")
+                action.payload.subjectType.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                state.noBinomes = filtredBinomes
+            }else if(action.payload.section.length === 0 && action.payload.subjectType.length === 0 && action.payload.studentLvl){
+                console.log("lvl")
+                const result = state.noBinomesCopy.filter((f)=>f.lvl === action.payload.studentLvl)
+                if(result.length >0){
+                    result.map((r)=>{
+                        filtredBinomes = [...filtredBinomes,r]
+                    })
+                }
+                state.noBinomes = filtredBinomes
+            }else if(action.payload.section.length > 0 && action.payload.subjectType.length > 0 && !action.payload.studentLvl){
+                console.log("section + pfetype")
+                action.payload.section.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.section ===s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                action.payload.subjectType.map((s)=>{
+                    const result2 = filtredBinomes.filter((f)=>f.pfeType === s)
+                    if(result2.length >0){
+                        result2.map((r)=>{
+                            filtredBinomes2 = [...filtredBinomes2,r]
+                        })
+                    }
+                })
+                state.noBinomes = filtredBinomes2
+            }else if(action.payload.section.length > 0 && action.payload.subjectType.length === 0 && action.payload.studentLvl){
+                console.log("section + lvl")
+                action.payload.section.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.section ===s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                const result2 = filtredBinomes.filter((f)=>f.lvl === action.payload.studentLvl)
+                if(result2.length >0){
+                    result2.map((r)=>{
+                        filtredBinomes2 = [...filtredBinomes2,r]
+                    })
+                }
+                state.noBinomes = filtredBinomes2
+            }else if(action.payload.section.length === 0 && action.payload.subjectType.length > 0 && action.payload.studentLvl){
+                console.log("pfetype + lvl")
+                action.payload.subjectType.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                const result2 = filtredBinomes.filter((f)=>f.lvl === action.payload.studentLvl)
+                if(result2.length >0){
+                    result2.map((r)=>{
+                        filtredBinomes2 = [...filtredBinomes2,r]
+                    })
+                }
+                state.noBinomes = filtredBinomes2
+            }else if(action.payload.section.length > 0 && action.payload.subjectType.length > 0 && action.payload.studentLvl){
+                action.payload.section.map((s)=>{
+                    const result = state.noBinomesCopy.filter((f)=>f.section === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredBinomes = [...filtredBinomes,r]
+                        })
+                    }
+                })
+                action.payload.subjectType.map((s)=>{
+                    const result2 = filtredBinomes.filter((f)=>f.pfeType === s)
+                    if(result2){
+                        result2.map((r)=>{
+                            filtredBinomes2 = [...filtredBinomes2,r]
+                        })
+                    }
+                })
+                const result3 = filtredBinomes2.filter((f)=>f.lvl === action.payload.studentLvl)
+                if(result3){
+                    result3.map((r)=>{
+                        filtredBinomes3 = [...filtredBinomes3,r]
+                    })
+                }
+                state.noBinomes = filtredBinomes3
+            }else{
+                state.noBinomes = state.noBinomesCopy
+            }
+            
+        }
 
     },
     extraReducers:{
@@ -74,14 +222,14 @@ const studentSlice = createSlice({
             state.isLoading = false
             state.error = action.payload.message
         },
-        [getStudent.pending] : (state,action) => {
+        [getTheStudent.pending] : (state,action) => {
             state.isLoading = true
         },
-        [getStudent.fulfilled] : (state,action) => {
+        [getTheStudent.fulfilled] : (state,action) => {
             state.isLoading = false
             state.student = action.payload
         },
-        [getStudent.rejected] : (state,action) => {
+        [getTheStudent.rejected] : (state,action) => {
             state.isLoading = false
             state.error = action.payload.message
         },
@@ -91,6 +239,7 @@ const studentSlice = createSlice({
         [getNoBinomes.fulfilled] : (state,action) => {
             state.isLoading = false
             state.noBinomes = action.payload
+            state.noBinomesCopy = action.payload
         },
         [getNoBinomes.rejected] : (state,action) => {
             state.isLoading = false
@@ -101,7 +250,6 @@ const studentSlice = createSlice({
         },
         [updateStudent.fulfilled] : (state,action) => {
             state.isLoading = false
-          
             state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
             localStorage.setItem("profile",JSON.stringify({...action.payload}))
         },
@@ -120,8 +268,45 @@ const studentSlice = createSlice({
             state.isLoading = false
             state.error = action.payload.message
         },
+        [beNoBinome.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [beNoBinome.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
+        },
+        [beNoBinome.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
+        [addEncadreur.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [addEncadreur.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
+            localStorage.setItem("profile",JSON.stringify({...action.payload}))
+        },
+        [addEncadreur.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
+        [removeEncadreur.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [removeEncadreur.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
+            localStorage.setItem("profile",JSON.stringify({...action.payload}))
+        },
+        [removeEncadreur.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
 
     }
 })
+
+export const {filterStudent} = studentSlice.actions
 
 export default studentSlice.reducer

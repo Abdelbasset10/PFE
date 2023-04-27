@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const teacherSchema = mongoose.Schema({
-    
     name:{
         type:String,
         required:true
@@ -25,7 +24,10 @@ const teacherSchema = mongoose.Schema({
     pfeType:{
         type:String,
         enum:['web','mobile','ai','cyber'],
-        default:'ai'
+    },
+    lvl:{
+        type:String,
+        enum:["L3","M2"]
     },
     studentsVision:[{type:mongoose.Schema.Types.ObjectId, ref:'Student'}],
     isVision:{

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import {HiDocumentText} from 'react-icons/hi'
 import {GrAnnounce} from 'react-icons/gr'
-import {BsPeopleFill} from 'react-icons/bs'
+import {BsPeopleFill, BsMessenger} from 'react-icons/bs'
 import {BiLogOutCircle} from 'react-icons/bi'
 import {IoIosPaper} from 'react-icons/io'
 import {MdSettings} from 'react-icons/md'
@@ -32,6 +32,10 @@ const Sidebar = () => {
                 <div className={`flex items-center gap-2 ${pathname === '/announces' && 'border-[1px] border-pfe-blue text-pfe-blue'} cursor-pointer md:px-2 lg:px-6 py-1 rounded-lg ${pathname !== '/announces' && 'hover:text-pfe-blue hover:border-[1px] hover:border-pfe-blue'}`} >
                     <GrAnnounce />
                     <Link to='/announces' >Admin Announcements</Link>
+                </div>
+                <div className={`flex items-center gap-2 ${pathname === '/messenger' && 'border-[1px] border-pfe-blue text-pfe-blue'} cursor-pointer md:px-2 lg:px-6 py-1 rounded-lg ${pathname !== '/messenger' && 'hover:text-pfe-blue hover:border-[1px] hover:border-pfe-blue'}`} >
+                    <BsMessenger />
+                    <Link to='/messenger' >Messages</Link>
                 </div>
             </div>
             <div className='flex flex-col gap-4' >
