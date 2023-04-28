@@ -57,5 +57,14 @@ export const getAllAnnounces = () => API.get("/announce")
 export const updateAnnounce = (announceId,subjectInfo) => API.patch(`/announce/${announceId}`,subjectInfo)
 export const deletAnnounce = (id) => API.delete(`/announce/${id}`)
 
+//Messenger
+
+export const getUserConversations = (userId) => API.get(`/conversation/${userId}`)
+export const getMessagesConversation = (convId) => API.get(`/messenger/${convId}`)
+export const createMessage = (convId,senderId,text) => API.post('/messenger',{conversationId:convId,sender:senderId,text})
+
+
+
+
 
 

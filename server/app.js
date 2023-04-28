@@ -10,6 +10,8 @@ const authRouter = require('./routes/auth')
 const studentRouter = require('./routes/student')
 const subjectRouter = require('./routes/subject')
 const teacherRouter = require('./routes/teacher')
+const convRouter = require('./routes/conversation')
+const messageRouter = require('./routes/messages')
 
 
 
@@ -28,6 +30,8 @@ app.use('/auth',authRouter)
 app.use('/student',studentRouter)
 app.use('/subject',subjectRouter)
 app.use('/teacher',teacherRouter)
+app.use('/conversation',convRouter)
+app.use('/messenger',messageRouter)
 
 mongoose.set('strictQuery', false)
 mongoose.connect('mongodb://localhost:27017/pfe')

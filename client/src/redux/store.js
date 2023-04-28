@@ -6,6 +6,7 @@ import teacherSlice from './features/teacherSlice'
 import subjectSlice from './features/subjectSlice'
 import announceSlice from './features/announceSlice'
 import adminSlice from './features/adminSlice'
+import messengerSlice from './features/messengerSlice'
 
 const store = configureStore({
     reducer:{
@@ -15,7 +16,8 @@ const store = configureStore({
         teacher:teacherSlice,
         subject:subjectSlice,
         announce:announceSlice,
-        admin:adminSlice
+        admin:adminSlice,
+        messenger:messengerSlice
     }
 })
 

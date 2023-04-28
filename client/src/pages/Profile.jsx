@@ -23,7 +23,6 @@ import Sidebar from '../components/Sidebar'
 const Profile = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [theStudent,setTheStudent] = useState()
     const {students, student} = useSelector((state)=>state.student)
     const {teachers, hisSubjects} = useSelector((state)=>state.teacher)
     const {admins, hisAnnounces} = useSelector((state)=>state.admin)
