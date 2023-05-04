@@ -15,14 +15,19 @@ const Conversation = ({conv}) => {
 
     const getConvFreind = () => {
         dispatch(messagesConversation(convId))
-        dispatch(setFreind({theFreind,convId}))
+        dispatch(setFreind({theFreind,convId,conv}))
     }
 
     useEffect(()=>{
         if(freind){
             const getFreind = async () => {
-                const {data} = await getTeacher(freind) && await getStudent(freind)
-                setTheFreind(data.name)
+                const {data} = await getTeacher(freind)
+                if(!data) {
+                    const {data} = await getStudent(freind)
+                    setTheFreind(data)
+                }else{
+                    setTheFreind(data)
+                }                
             }
             getFreind()
         }    
@@ -30,7 +35,7 @@ const Conversation = ({conv}) => {
     return (
     <div className='flex gap-2 items-center hover:bg-pfe-blue hover:text-pfe-white hover:px-2 hover:py-1 hover:rounded-lg hover:cursor-pointer' onClick={getConvFreind} >
         <img src={cat} alt="userImg" className='w-10 h-10 rounded-[50%]' />
-        <p>{theFreind}</p>
+        <p>{theFreind?.name}</p>
     </div>
   )
 }

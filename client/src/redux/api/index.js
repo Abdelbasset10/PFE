@@ -18,6 +18,7 @@ export const signIn = (userInfo) => API.post("/auth/sign-in",userInfo)
 export const getAllStudents = () => API.get("/student/all-students")
 export const getStudent = (id) => API.get(`/student/${id}`)
 export const getNoBinomes = () => API.get("/student/no-binomes")
+export const getBinomes = () => API.get("/student/binomes")
 export const updateStudent = (id,userInfo) => API.patch(`/student/${id}`,userInfo)
 export const addBinome = (id,userId) => API.patch(`/student/add-binome/${id}`,{studentId:userId}) 
 export const beNoBinome = (myId,binomeId) => API.patch(`/student/be-nobinome/${binomeId}`,{studentId:myId}) 
@@ -59,6 +60,7 @@ export const deletAnnounce = (id) => API.delete(`/announce/${id}`)
 
 //Messenger
 
+export const createConversation = (user1,user2) => API.post('/conversation',{user1,user2})
 export const getUserConversations = (userId) => API.get(`/conversation/${userId}`)
 export const getMessagesConversation = (convId) => API.get(`/messenger/${convId}`)
 export const createMessage = (convId,senderId,text) => API.post('/messenger',{conversationId:convId,sender:senderId,text})

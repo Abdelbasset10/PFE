@@ -39,6 +39,15 @@ export const getNoBinomes = createAsyncThunk("getNoBinomes/student",async (_,{re
     }
 })
 
+export const getBinomes = createAsyncThunk("getBinomes/student",async (_,{rejectWithValue}) => {
+    try {
+        const {data} = await api.getBinomes()
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
 export const addBinome = createAsyncThunk("addBinome/student",async ({UserId,userId,toast},{rejectWithValue}) => {
     try {
         const {data} = await api.addBinome(UserId,userId)
@@ -85,6 +94,7 @@ const studentSlice = createSlice({
     initialState:{
         noBinomes:[],
         noBinomesCopy:[],
+        binomes:[],
         students:[],
         student:null,
         isLoading:false,
@@ -242,6 +252,17 @@ const studentSlice = createSlice({
             state.noBinomesCopy = action.payload
         },
         [getNoBinomes.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
+        [getBinomes.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [getBinomes.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.binomes = action.payload
+        },
+        [getBinomes.rejected] : (state,action) => {
             state.isLoading = false
             state.error = action.payload.message
         },

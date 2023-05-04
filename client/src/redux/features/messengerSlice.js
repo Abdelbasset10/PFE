@@ -2,6 +2,15 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import * as api from '../api'
 
 
+export const createConversation = createAsyncThunk("/createConversation/messenger",async ({user1,user2},{rejectWithValue})=> {
+    try {
+        const {data} = await api.createConversation(user1,user2)
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
 export const userConversations = createAsyncThunk("/userConversation/messenger",async (userId,{rejectWithValue})=> {
     try {
         const {data} = await api.getUserConversations(userId)
@@ -39,6 +48,7 @@ const messengerSlice = createSlice({
         userConvs:[],
         convMessages:[],
         convId:null,
+        conv:null,
         freind:"",
         error:""
     },
@@ -47,10 +57,22 @@ const messengerSlice = createSlice({
             console.log(action.payload)
             state.freind = action.payload.theFreind
             state.convId = action.payload.convId
+            state.conv = action.payload.conv
         }
 
     },
     extraReducers:{
+        [createConversation.pending] :(state,action)=>{
+            state.isLoading = true
+        },
+        [createConversation.fulfilled] :(state,action)=>{
+            state.isLoading = false
+            state.userConvs = [...state.userConvs,action.payload]
+        },
+        [createConversation.rejected] :(state,action)=>{
+            state.isLoadin = false
+            state.error = action.payload.message
+        },
         [userConversations.pending] :(state,action)=>{
             state.isLoading = true
         },

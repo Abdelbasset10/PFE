@@ -16,6 +16,7 @@ import { ToastContainer} from 'react-toastify';
 import { setUser } from './redux/features/authSlice'
 import { allStudents } from './redux/features/studentSlice'
 import Messenger from './pages/Messenger'
+import Dashboard from './pages/Dashboard'
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
             <Route  path='/teachers' element={<Teachers />} />  
             <Route  path='/profile/:id' element={<Profile />} />  
             <Route  path='/messenger' element={<Messenger />}/>
+            <Route  path='/dashboard' element={<Dashboard />}/>
           </Routes>
       <ToastContainer />
     </BrowserRouter>

@@ -58,6 +58,16 @@ const getAllNoBinomes = async (req,res) => {
     }
 }
 
+const getAllBinomes = async (req,res) => {
+    try {
+        const noBinomes = await Student.find({isBinome:true})
+        res.status(200).json(noBinomes)
+    } catch (error) {
+        res.status(404).json({message:error})
+    }
+}
+
+
 const searchStudent = async (req,res) => {
     try {
         const {userName} = req.query
@@ -174,6 +184,7 @@ module.exports = {
         updateStudent,
         deleteStudent,
         getAllNoBinomes,
+        getAllBinomes,
         searchStudent,
         addBinome,
         BeNoBinome,

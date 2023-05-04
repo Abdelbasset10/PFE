@@ -18,6 +18,7 @@ import ProfileModal from '../components/ProfileModal'
 import {toast} from 'react-toastify'
 import UserName from '../components/UserName'
 import Sidebar from '../components/Sidebar'
+import { createConversation } from '../redux/features/messengerSlice'
 
 
 const Profile = () => {
@@ -33,6 +34,13 @@ const Profile = () => {
     const user = students.find((s)=>s._id === id) || teachers.find((p)=>p._id === id) || admins.find((p)=>p._id === id)
     const userId = user?._id
     const binomeId = User?.hisBinome
+
+    const handleCreateConv = () => {
+        if(UserId !== userId){
+            dispatch(createConversation({user1:UserId,user2:userId}))
+            navigate('/messenger')
+        }
+    }
     useEffect(()=>{  
                 dispatch(allTeachers())      
                 dispatch(teacherSubjects(id)) 
@@ -107,6 +115,10 @@ const Profile = () => {
                     <div className='w-[15rem] sm:w-[20rem] h-[1px] bg-pfe-blue text-center ' ></div>
                 </div>
                 <div className='flex flex-col ' >
+                    {UserId !== userId && (
+                        <button className='bg-pfe-blue text-pfe-white w-fit px-4 py-1 mb-4' onClick={handleCreateConv} >Contact</button>
+
+                    )}
                     <div className='flex justify-between items-center' >
                         <p>Email : <span className='text-pfe-blue hover:underline cursor-pointer' >{user.email}</span></p>
                     </div>
