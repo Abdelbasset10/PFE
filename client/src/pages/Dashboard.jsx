@@ -12,6 +12,7 @@ import { allEncadreurs } from '../redux/features/teacherSlice';
 import { allSubjects } from '../redux/features/subjectSlice';
 import PieChart from '../components/PieChart';
 import { BarChart } from '../components/BarChart';
+import Navbar from '../components/Navbar';
 
 Chart.register(CategoryScale);
 
@@ -32,14 +33,6 @@ const Dashboard = () => {
     
 
 
-    useEffect(()=>{
-        dispatch(allStudents())
-        dispatch(allEncadreurs())
-        dispatch(allSubjects())
-        dispatch(getNoBinomes())
-        dispatch(getBinomes())
-
-    },[])
   const [chartData, setChartData] = useState({
     labels:['Monome', 'Binome'] , 
     datasets: [
@@ -69,7 +62,16 @@ const Dashboard = () => {
       }
     ]
   });
+  useEffect(()=>{
+    dispatch(allStudents())
+    dispatch(allEncadreurs())
+    dispatch(allSubjects())
+    dispatch(getNoBinomes())
+    dispatch(getBinomes())
+},[])
   return (
+    <>
+    <Navbar />
     <div className='flex'>
       <Sidebar />
       <div className='flex-[9]  '>
@@ -104,6 +106,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

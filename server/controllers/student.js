@@ -1,6 +1,7 @@
 const mongoose  = require('mongoose')
 const Student = require('../models/Student')
 const Teacher = require('../models/Teacher')
+const Admin = require('../models/Admin')
 const jwt = require('jsonwebtoken')
 
 
@@ -28,8 +29,7 @@ const getStudent = async (req,res) => {
 }
 
 const updateStudent = async (req,res) => {
-    try {
-        
+    try { 
         const {id} = req.params
         const getStudentAndUpdate = await Student.findByIdAndUpdate(id,{...req.body},{new:true})
         const token = jwt.sign({userId:getStudentAndUpdate._id,userName:getStudentAndUpdate.name,userType:'student'},'JWT_SECRET',{expiresIn:'1d'})
@@ -71,8 +71,23 @@ const getAllBinomes = async (req,res) => {
 const searchStudent = async (req,res) => {
     try {
         const {userName} = req.query
-        const student = await Student.find({name:userName})
-        res.status(200).json(student)
+        const user = await Student.find({name:userName}) || await Teacher.find({name:userName}) || await Admin.find({name:userName})
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+const searchNoBinome = async (req,res) => {
+    try {
+        const {userName} = req.query
+        const noBinomes = await Student.find({isBinome:false})
+        const users = await noBinomes.filter((f)=>f.name.startsWith(userName))
+        if(users.length === 0){
+            const result = []
+            return res.status(200).json(result)
+        }
+        res.status(200).json(users)
     } catch (error) {
         res.status(404).json({message:error.message})
     }
@@ -186,6 +201,7 @@ module.exports = {
         getAllNoBinomes,
         getAllBinomes,
         searchStudent,
+        searchNoBinome,
         addBinome,
         BeNoBinome,
         addTeacher,

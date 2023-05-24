@@ -3,7 +3,9 @@ import * as api from '../api'
 
 export const newSubject = createAsyncThunk("newSubject/subject", async ({subjectInfo,toast},{rejectWithValue}) => {
     try {
+        console.log(subjectInfo)
         const {data} = await api.createSubject(subjectInfo)
+        console.log(data)
         toast.success("you have been created new Subject !!")
         return data
     } catch (error) {
@@ -123,7 +125,7 @@ const subjectSlice = createSlice({
         },
         [newSubject.fulfilled] : (state,action) => {
             state.isLoading = false
-            state.subjects = [...state.subject,action.payload]
+            state.subjects = [...state.subjects,action.payload]
             state.subjectsCopy = [...state.subjectsCopy,action.payload]
         },
         [newSubject.rejected] : (state,action) => {

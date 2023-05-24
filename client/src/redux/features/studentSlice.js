@@ -29,10 +29,19 @@ export const updateStudent = createAsyncThunk("updateStudent/student",async ({us
     }
 })
 
+export const searchNoBinome = createAsyncThunk("searchNoBinome/student",async (userName,{rejectWithValue}) => {
+    try {
+        const {data} = await api.searchNoBinome(userName)
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
 
 export const getNoBinomes = createAsyncThunk("getNoBinomes/student",async (_,{rejectWithValue}) => {
     try {
         const {data} = await api.getNoBinomes()
+        
         return data
     } catch (error) {
         return rejectWithValue(error.response.data)
@@ -275,6 +284,18 @@ const studentSlice = createSlice({
             localStorage.setItem("profile",JSON.stringify({...action.payload}))
         },
         [updateStudent.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
+        [searchNoBinome.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [searchNoBinome.fulfilled] : (state,action) => {
+            state.isLoading = false
+            console.log(action.payload)
+            state.noBinomes = action.payload
+        },
+        [searchNoBinome.rejected] : (state,action) => {
             state.isLoading = false
             state.error = action.payload.message
         },

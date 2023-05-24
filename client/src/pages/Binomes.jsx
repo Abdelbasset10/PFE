@@ -2,24 +2,26 @@ import React, {useState, useEffect} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import { FaFilter } from 'react-icons/fa'
 import { people } from '../data'
-import cat from '../assets/Cat03.jpg'
+import imgDefault from '../assets/user.png'
 import {IoIosAddCircleOutline} from 'react-icons/io'
 import {MdMessage} from 'react-icons/md'
 import Filter from '../components/Filter'
 import { getNoBinomes } from '../redux/features/studentSlice'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import Navbar from '../components/Navbar'
 
 const Binomes = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const User = useSelector((state)=>state.auth?.authData?.user)
     const {noBinomes} = useSelector((state)=>state.student)
 
     useEffect(()=>{
         dispatch(getNoBinomes())
     },[])
   return (
+    <>
+    <Navbar />
     <div className='flex' >
         <Sidebar />
         <div className='flex-[9]  ' >
@@ -40,10 +42,11 @@ const Binomes = () => {
                             <th className=''>Contact</th>
                         </tr>
                         {noBinomes?.map((p,index)=>{
+                            console.log(p)
                             return (
                                 <tr key={index} className="cursor-pointer hover:bg-[#F9F9F9]" onClick={()=>navigate(`/profile/${p._id}`)} >
                                     <td className='flex items-center gap-2 py-2  ' >
-                                        <img src={cat} alt="student Img" className='w-8 h-8 rounded-[50%]' />
+                                        <img src={p.profilePicture ? p.profilePicture : imgDefault} alt="student Img" className='w-8 h-8 rounded-[50%]' />
                                         <p>{p.name}</p>
                                     </td>
                                     <td className='py-2 ' >{p.lvl}</td>
@@ -71,6 +74,7 @@ const Binomes = () => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

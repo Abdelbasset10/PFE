@@ -14,6 +14,7 @@ const Subject = ({s}) => {
   
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [readMore,setReadMore] = useState(false)
   const User = useSelector((state)=>state.auth?.authData?.user)
   const subjectId = s?._id
   
@@ -32,12 +33,9 @@ const Subject = ({s}) => {
     getTheTeacher()
   },[s])
 
-  const {isNewSubject} = useSelector((state)=>state.modal)
 
 
-  if(isNewSubject){
-    return <Modal />
-  }
+  
   return (
     <div className='border-[1px] shadow-lg rounded-lg' >
       <div className='p-4' >
@@ -62,8 +60,12 @@ const Subject = ({s}) => {
           )}
         </div>
         <p className='font-bold text-pfe-blue mt-1' >{s?.title}</p>
-        <p className='text-sm sm:text-base' >{s?.description}</p>
+        
+        <p className='text-sm sm:text-base' >{readMore ? s?.description : s?.description.slice(0,500)} ...{readMore ? <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(false)} >read less</span> : <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(true)}>read More</span> }</p>
         <p className='text-pfe-blue' >#{s?.subjectField} #{s?.pfeLvl}</p>
+        {s?.picture && (
+          <img src={s?.picture} alt="subject Image" className='w-full h-[20rem] object-contain' />
+        )}
       </div>
     </div>
   )

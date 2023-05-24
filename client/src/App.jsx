@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Subjects from './pages/Subjects'
@@ -14,7 +14,6 @@ import Profile from './pages/Profile'
 import Announces from './pages/Announces'
 import { ToastContainer} from 'react-toastify';
 import { setUser } from './redux/features/authSlice'
-import { allStudents } from './redux/features/studentSlice'
 import Messenger from './pages/Messenger'
 import Dashboard from './pages/Dashboard'
 
@@ -22,10 +21,11 @@ import Dashboard from './pages/Dashboard'
 const App = () => {
   const dispatch = useDispatch()
   const [showSide, setShowSide] = useState(false)
+  const User = JSON.parse(localStorage.getItem("profile"))
+  console.log(User)
+  //const User = useSelector((state)=>state.auth?.authData?.user)
 
-
-  useEffect(()=>{
-    
+  useEffect(()=>{ 
     dispatch(setUser())
   },[])
 
@@ -38,18 +38,15 @@ const App = () => {
         )}
       </div>
       <Routes>
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />     
-      </Routes>
-        <Navbar />          
-          <Routes>
-            <Route exact path='/' element={<Subjects />} />  
-            <Route exact path='/announces' element={<Announces />} />  
-            <Route  path='/binomes' element={<Binomes />} />  
-            <Route  path='/teachers' element={<Teachers />} />  
-            <Route  path='/profile/:id' element={<Profile />} />  
-            <Route  path='/messenger' element={<Messenger />}/>
-            <Route  path='/dashboard' element={<Dashboard />}/>
+        <Route path='/register' element={User ? <Navigate to='/' /> : <Register /> } />
+        <Route path='/login' element={User ? <Navigate to='/' /> : <Login />} />           
+            <Route exact path='/' element={User ? <Subjects /> : <Navigate to='/login' />} />  
+            <Route  path='/announces' element={User ? <Announces /> : <Navigate to='/login' />} />  
+            <Route  path='/binomes' element={User ? <Binomes /> : <Navigate to='/login' />} />  
+            <Route  path='/teachers' element={User ? <Teachers /> : <Navigate to='/login' />} />  
+            <Route  path='/profile/:id' element={User ? <Profile /> : <Navigate to='/login' />} />  
+            <Route  path='/messenger' element={User ? <Messenger /> : <Navigate to='/login' />}/>
+            <Route  path='/dashboard' element={User ? <Dashboard /> : <Navigate to='/login' />}/>
           </Routes>
       <ToastContainer />
     </BrowserRouter>

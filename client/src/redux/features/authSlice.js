@@ -41,6 +41,9 @@ const authSlice = createSlice({
         logOut : (state,action) => {
             state.authData = null
             localStorage.removeItem("profile")
+            setTimeout(()=>{
+                window.location.reload()
+            },[1000])
         }
     },
     extraReducers:{

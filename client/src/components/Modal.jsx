@@ -7,6 +7,7 @@ import { newSubject, updateSubject } from '../redux/features/subjectSlice'
 import {toast} from 'react-toastify'
 import { teacherSubjects } from '../redux/features/teacherSlice'
 import { newAnnounce, updateAnnounce } from '../redux/features/announceSlice'
+import FileInput from './FileInput'
 
 const Modal = () => {
     const dispatch = useDispatch()
@@ -20,7 +21,6 @@ const Modal = () => {
     console.log(announceId)
     
     const User = useSelector((state)=>state.auth?.authData?.user)
-
 
     const handleChange = (e) => {
         setSubjectInfo({...subjectInfo,[e.target.name]:e.target.value})
@@ -46,18 +46,23 @@ const Modal = () => {
         
         dispatch(closeModal())
     }
+    console.log(subjectId)
+    console.log(subjects)
     const getTheSubject = subjects.find((s)=>s._id === subjectId)
    
     const getTheAnnounce = announces.find((s)=>s._id === announceId) || hisAnnounces.find((s)=>s._id === announceId)
-    console.log(announces)
-    console.log(getTheAnnounce)
 
+
+    const handleInputState = (name, value) => {
+        setSubjectInfo((prev) => ({ ...prev, [name]: value }));
+    };
+    
     useEffect(()=>{
         if(getTheAnnounce){
             setSubjectInfo(getTheAnnounce)
         }
     },[announceId])
-
+    console.log(getTheSubject)
     useEffect(()=>{
         if(getTheSubject){
             setSubjectInfo(getTheSubject)
@@ -97,7 +102,13 @@ const Modal = () => {
                 )}
                 <div className='p-2 border-[1px] border-bg text-[gray] flex flex-wrap justify-between gap-4'>
                     <label>Select an Image</label>
-                    <input type="file" className='text-sm sm:text-base' name="picture" value={subjectInfo.picture} onChange={handleChange} />
+                    <FileInput
+                    name="picture"
+                    label="Choose Image"
+                    handleInputState={handleInputState}
+                    value={subjectInfo.picture}
+                    type="image"
+                    />                           
                 </div>
                 <div className='p-2 border-[1px] border-bg text-[gray] flex flex-wrap justify-between gap-4'>
                     <input type="text"  className='outline-none' placeholder='Title...' name="title" value={subjectInfo.title} onChange={handleChange} />

@@ -6,6 +6,7 @@ import {toast} from 'react-toastify'
 import { allStudents, updateStudent } from '../redux/features/studentSlice'
 import { allTeachers, updateTeacher } from '../redux/features/teacherSlice'
 import { allAdmins, updateAdmin } from '../redux/features/adminSlice'
+import FileInput from './FileInput'
 
 
 const ProfileModal = () => {
@@ -24,6 +25,10 @@ const ProfileModal = () => {
     const handleChange = (e) => {
         setUserInfo({...userInfo,[e.target.name]:e.target.value})
     }
+    const handleInputState = (name, value) => {
+        setUserInfo((prev) => ({ ...prev, [name]: value }));
+    };
+
     const userId = User?._id
     
     const handleSubmit = (e) => {
@@ -96,6 +101,15 @@ const ProfileModal = () => {
                                 <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"M2"})} />
                                 </div>
                             </div>
+                        </div>
+                        <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
+                        <FileInput
+                        name="profilePicture"
+                        label="Choose Image"
+                        handleInputState={handleInputState}
+                        value={userInfo.profilePicture}
+                        type="image"
+                        />   
                         </div>
                     
                 

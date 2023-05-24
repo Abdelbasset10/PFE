@@ -9,6 +9,7 @@ import { getStudent, getTeacher } from '../redux/api'
 import Conversation from '../components/Conversation'
 import Messages from '../components/Messages'
 import {io} from 'socket.io-client'
+import Navbar from '../components/Navbar'
 
 const Messenger = () => {
 
@@ -68,13 +69,22 @@ const Messenger = () => {
     },[userId])
 
     return (
+        <>
+        <Navbar />
         <div className='flex h-[86vh] border-[1px] shadow-lg rounded-lg ' >
             <div className='flex-[3] hidden  md:flex flex-col gap-4 py-10 md:px-2 lg:px-6 h-full overflow-y-scroll scrollbar-thin scrollbar-thumb-pfe-blue '>
-                {userConvs.map((userConv,index)=>{
-                    return (
-                        <Conversation key={index} conv={userConv}  />
-                    )
-                })}
+                {userConvs.length === 0 ? (
+                    <div className='border-r-[1px] border-pfe-blue h-full shadow-lg pr-4' >
+                        <p>There is No conversations for Now...</p>
+                        <p>Please Back and Select some user to talk with him !</p>
+                    </div>
+                ) : (
+                    userConvs.map((userConv,index)=>{
+                        return (
+                            <Conversation key={index} conv={userConv}  />
+                        )
+                    })
+                )}
             </div>
             {!freind ? (
                 <div className='flex-[9] py-10'>
@@ -117,6 +127,7 @@ const Messenger = () => {
             </div>
             )}
         </div>
+        </>
     )
 }
 

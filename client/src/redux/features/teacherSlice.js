@@ -30,7 +30,9 @@ export const getTeacher = createAsyncThunk("getTeacher/teacher",async (id,{rejec
 
 export const updateTeacher = createAsyncThunk("updateTeacher/teacher",async ({userId,userInfo,toast},{rejectWithValue}) => {
     try {
+        console.log(userInfo)
         const {data} = await api.updateTeacher(userId,userInfo)
+        console.log(data)
         toast.info("you have been updated your self")
         return data
     } catch (error) {

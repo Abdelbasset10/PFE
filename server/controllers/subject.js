@@ -3,9 +3,9 @@ const Teacher = require('../models/Teacher')
 
 const createSubject = async (req,res) => {
     try {
-        const {title,description,subjectField,pfeLvl} = req.body
+        const {title,description,subjectField,pfeLvl,picture} = req.body
         const newSubject = new Subject({
-            title,description,subjectField,pfeLvl,teacher:req.user.userId
+            title,description,subjectField,pfeLvl,picture,teacher:req.user.userId
         })
         await newSubject.save()
         res.status(201).json(newSubject)
@@ -56,14 +56,45 @@ const deleteSubject = async (req,res) => {
 const getSubjectByField = async (req,res) => {
     try {
         const {field} = req.query
-        const result = new RegExp(field,"i")
-        const subjects = await Subject.find({subjectField:result})
+        //const result = new RegExp(field,"i")
+        const teachers = await Teacher.find({})
+        const getTeacher = await teachers.filter((f)=>f.name.startsWith(field))
+        if(getTeacher.length === 0){
+            const subjects = []
+            return res.status(200).json(subjects)
+        }
+        let subjects =[]
+        const result = await Promise.all(getTeacher.map(async(g)=>{
+            const data = await Subject.find({teacher:g._id})
+            // if(!data){
+            //     console.log("2")
+            //     subjects = []
+            // }
+            if(data){
+                console.log("2")
+                data.map((d)=>{
+                    subjects.push(d)
+                })
+                console.log(subjects)
+                return data
+            }
+        }))
+        console.log(subjects)
+        // getTeacher.map(async (g)=>{
+        //     const result = await Subject.find({teacher:g._id})
+        //     console.log("1")
+        //     result.map((r)=>{
+        //         subjects.push(r)
+        //     })
+            
+        // })
+
+        //const subjects = await Subject.find({teacher:getTeacher._id})
         res.status(200).json(subjects)
     } catch (error) {
         res.status(404).json({message:error.message})
     }
 }
-
 const filterSubjects = async (req,res) => {
     try {
         const {filtredSubjects} = req.body;

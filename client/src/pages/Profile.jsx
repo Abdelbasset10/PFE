@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import { openAnnounceModal, openProfileModal, openSubjectModal } from '../redux/features/modalSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaCamera } from 'react-icons/fa'
-import cat from '../assets/Cat03.jpg'
+import u from '../assets/user.png'
 import {AiOutlineEdit} from 'react-icons/ai'
 import Subject from '../components/Subject'
 import { people } from '../data'
@@ -19,6 +19,7 @@ import {toast} from 'react-toastify'
 import UserName from '../components/UserName'
 import Sidebar from '../components/Sidebar'
 import { createConversation } from '../redux/features/messengerSlice'
+import Navbar from '../components/Navbar'
 
 
 const Profile = () => {
@@ -77,14 +78,16 @@ const Profile = () => {
     }
    
     return (
-    <div className='flex' >
+        <>
+        <Navbar />
+        <div className='flex' >
         <Sidebar />
         <div className='flex-[9]'>
         <div className='px-4 sm:px-20 py-10 border-l-[1px] border-t-[1px] shadow-lg h-full flex flex-col items-center justify-center' >
             <div className='flex flex-col gap-6 ' >
                 <div className='flex flex-col gap-4' >
                     <div className='flex flex-col items-center gap-2' >
-                        <img src={cat} alt="userImage" className='w-24 h-24 rounded-[50%]' />
+                        <img src={user?.profilePicture ? user?.profilePicture : u} alt="userImage" className='w-24 h-24 rounded-[50%]' />
                         {User?._id === id && (
                             <button className='flex items-center gap-2 px-4 py-1 bg-pfe-blue text-pfe-white' >
                                 <FaCamera />
@@ -213,7 +216,9 @@ const Profile = () => {
     </div>
 
     </div>
-  )
+
+        </>
+      )
 }
 
 export default Profile
