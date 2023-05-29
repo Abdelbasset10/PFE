@@ -59,10 +59,11 @@ export const getBinomes = createAsyncThunk("getBinomes/student",async (_,{reject
 
 export const addBinome = createAsyncThunk("addBinome/student",async ({UserId,userId,toast},{rejectWithValue}) => {
     try {
-        const {data} = await api.addBinome(UserId,userId)
+        const {data} = await api.addBinome(userId,UserId)
         toast.info("you have been Add that Student to your Binome")
         return data
     } catch (error) {
+        toast.error(error.response.data.message)
         return rejectWithValue(error.response.data)
     }
 })
@@ -83,6 +84,7 @@ export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({User
         toast.info("you have been Add that Teacher to be your Encadreur")
         return data
     } catch (error) {
+        toast.error(error.response.data.message)
         return rejectWithValue(error.response.data)
     }
 })
@@ -305,6 +307,7 @@ const studentSlice = createSlice({
         [addBinome.fulfilled] : (state,action) => {
             state.isLoading = false
             state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
+            localStorage.setItem("profile",JSON.stringify({...action.payload}))
         },
         [addBinome.rejected] : (state,action) => {
             state.isLoading = false
@@ -316,6 +319,7 @@ const studentSlice = createSlice({
         [beNoBinome.fulfilled] : (state,action) => {
             state.isLoading = false
             state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
+            localStorage.setItem("profile",JSON.stringify({...action.payload}))
         },
         [beNoBinome.rejected] : (state,action) => {
             state.isLoading = false

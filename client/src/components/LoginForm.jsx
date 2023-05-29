@@ -25,7 +25,7 @@ const LoginForm = () => {
   }
   return (
     <div>
-        <h1 className='mt-8 mb-4 text-3xl text-pfe-black' >Create Account</h1>
+        <h1 className='mt-8 mb-4 text-3xl text-pfe-black' >Sign in with your account</h1>
         {userInfo.userType ? (
           <div>
             <form className='flex flex-col gap-4' onSubmit={handleSubmit} >
@@ -48,11 +48,7 @@ const LoginForm = () => {
             </div>
         <button className='bg-pfe-blue text-pfe-white py-3 shadow-lg' >Sign In</button>
       </form>
-      <button className='w-full py-3 flex items-center justify-center gap-4 text-pfe-blue  my-4 border-2 border-[#E6E6E6]'>
-        <img src={google} alt="google Photo" className='w-6 h-6' />
-        <p>Sign In with Google</p>
-      </button>
-      <div className='flex items-center gap-2' >
+      <div className='flex items-center gap-2 my-4' >
         <p>Don't Have Account ?</p>
         <Link to='/register' >
             <p className='text-pfe-blue cursor-pointer' >Sign Up</p>

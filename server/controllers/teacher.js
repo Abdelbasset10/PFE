@@ -52,6 +52,21 @@ const deleteTeacher = async (req,res) => {
     }
 }
 
+const searchEncadreur = async (req,res) => {
+    try {
+        const {userName} = req.query
+        const encadreurs = await Teacher.find({isVision:true})
+        const users = await encadreurs.filter((f) => f.name.startsWith(userName));
+        if (users.length === 0) {
+        const result = [];
+        return res.status(200).json(result);
+        }
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
 
 const searchTeacher = async (req,res) => {
     try {
@@ -108,4 +123,4 @@ const beNoVision = async (req,res) => {
 }
 
 
-module.exports = {getTeacher, getAllTeachers, getEncadreurs, updateTeacher, deleteTeacher, searchTeacher, getTeachersByField, beVision, beNoVision}
+module.exports = {getTeacher, getAllTeachers, getEncadreurs, updateTeacher, deleteTeacher, searchTeacher, searchEncadreur, getTeachersByField, beVision, beNoVision}

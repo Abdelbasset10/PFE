@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import bg from '../assets/sign-bg.png'
+import logo from '../assets/usthb.png'
+
 import RegisterForm from '../components/RegisterForm'
 
 const Register = () => {
@@ -10,7 +12,7 @@ const Register = () => {
       <div className='flex-[1] '>
         <div className=' px-4 sm:px-10 lg:px-14 py-10'>
           <div className='flex justify-between items-center'>
-            <h1 className='text-pfe-blue text-3xl' >LOGO</h1>
+          <img src={logo} alt="usthb" className='w-16 h-16' />
             <Link to='/login'>
               <button className='border-[1px] border-pfe-blue px-4 py-2 text-pfe-blue' >Sign In</button>
             </Link>

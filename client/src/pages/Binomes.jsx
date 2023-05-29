@@ -15,7 +15,8 @@ const Binomes = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {noBinomes} = useSelector((state)=>state.student)
-
+    const User = useSelector((state)=>state.auth?.authData?.user)
+    const UserId = User?._id
     useEffect(()=>{
         dispatch(getNoBinomes())
     },[])
@@ -42,7 +43,7 @@ const Binomes = () => {
                             <th className=''>Contact</th>
                         </tr>
                         {noBinomes?.map((p,index)=>{
-                            console.log(p)
+                            if(p?._id !== UserId){
                             return (
                                 <tr key={index} className="cursor-pointer hover:bg-[#F9F9F9]" onClick={()=>navigate(`/profile/${p._id}`)} >
                                     <td className='flex items-center gap-2 py-2  ' >
@@ -59,6 +60,7 @@ const Binomes = () => {
                                     </td>
                                 </tr>
                             )
+                        }
                         })}
                     </table>
                     )}

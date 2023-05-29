@@ -61,10 +61,39 @@ const Choices = () => {
     <div className='w-[310px] bg-pfe-white border-[1px] rounded-lg shadow-lg absolute right-0 top-12' >
                         <div className='flex flex-col gap-4 py-4 px-4' >
                             {pathname === '/binomes' && (
-                                <div>
+                            <div>
                                 <h1 className='text-xl mb-1' >Section</h1>
-                                <div className='grid grid-cols-2' >
-                                    <div className='flex flex-col gap-2' >
+                                {filtredStudent.studentLvl === "M2" ? (
+                                    <div className='grid grid-cols-2' >
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='IL' onChange={handleFilterSection}  />
+                                            <label>IL</label>
+                                        </div>
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='SII' onChange={handleFilterSection} />
+                                            <label>SII</label>
+                                        </div>
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='SSI' onChange={handleFilterSection} />
+                                            <label>SSI</label>
+                                        </div>
+                                    
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='MIV' onChange={handleFilterSection} />
+                                            <label>MIV</label>
+                                        </div>
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='HPC' onChange={handleFilterSection} />
+                                            <label>HPC</label>
+                                        </div>
+                                        <div className='flex gap-2' >
+                                            <input type="checkbox" name='BIO INFO' onChange={handleFilterSection} />
+                                            <label>BIO INFO</label>
+                                        </div>
+                                
+                                    </div>
+                                ) : (
+                                    <div className='grid grid-cols-2' >
                                         <div className='flex gap-2' >
                                             <input type="checkbox" name='ACAD A' onChange={handleFilterSection}  />
                                             <label>ACAD A</label>
@@ -77,8 +106,7 @@ const Choices = () => {
                                             <input type="checkbox" name='ACAD C' onChange={handleFilterSection} />
                                             <label>ACAD C</label>
                                         </div>
-                                    </div>
-                                    <div className='flex flex-col gap-2' >
+                                    
                                     <div className='flex gap-2' >
                                             <input type="checkbox" name='ISIL A' onChange={handleFilterSection} />
                                             <label>ISIL A</label>
@@ -87,8 +115,9 @@ const Choices = () => {
                                             <input type="checkbox" name='ISIL B' onChange={handleFilterSection} />
                                             <label>ISIL B</label>
                                         </div>
-                                    </div>
+                                    
                                 </div>
+                                )}
                             </div>
                             )}
                             <div>

@@ -28,6 +28,16 @@ export const getTeacher = createAsyncThunk("getTeacher/teacher",async (id,{rejec
     }
 })
 
+export const searchEncadreur = createAsyncThunk("searchEncadreur/teacher",async (userName,{rejectWithValue}) => {
+    try {
+        const {data} = await api.searchEncadreur(userName)
+        console.log(data)
+        return data
+    } catch (error) {
+        return rejectWithValue(error.response.data)
+    }
+})
+
 export const updateTeacher = createAsyncThunk("updateTeacher/teacher",async ({userId,userInfo,toast},{rejectWithValue}) => {
     try {
         console.log(userInfo)
@@ -168,6 +178,17 @@ const teacherslice = createSlice({
             state.hisSubjects = action.payload
         },
         [teacherSubjects.rejected] : (state,action) => {
+            state.isLoading = false
+            state.error = action.payload.message
+        },
+        [searchEncadreur.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [searchEncadreur.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.encadreurs = action.payload
+        },
+        [searchEncadreur.rejected] : (state,action) => {
             state.isLoading = false
             state.error = action.payload.message
         },

@@ -33,6 +33,7 @@ export const getAllTeachers = () => API.get("/teacher/all-teachers")
 export const getEncadreurs = () => API.get("/teacher/all-encadreurs")
 export const getTeacher = (id) => API.get(`/teacher/${id}`)
 export const updateTeacher = (id,userIfno) => API.patch(`/teacher/${id}`,userIfno)
+export const searchEncadreur = (userName) => API.get(`/teacher/encadreurs/search?userName=${userName}`)
 export const beVision = (id) => API.patch(`/teacher/be-vision/${id}`)
 export const beNoVision = (id) => API.patch(`/teacher/be-no-vision/${id}`)
 

@@ -78,14 +78,25 @@ const ProfileModal = () => {
                     <div className='flex flex-col gap-4' >
                         <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between ' >
                             <label>Update Your Section</label>
-                            <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
-                                <option  value="ACAD A" >ACAD A</option>
-                                <option  value="ACAD B">ACAD B</option>
-                                <option  value="ACAD C">ACAD C</option>
-                                <option  value="ISIL A">ISIL A</option>
-                                <option  value="ISIL B">ISIL B</option>
-                                <option  value="GTR">GTR</option>
-                            </select>
+                            {userInfo.lvl === "M2" ? (
+                                <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
+                                    <option  value="IL" >IL</option>
+                                    <option  value="SII">SII</option>
+                                    <option  value="SSI">SSI</option>
+                                    <option  value="MIV">MIV</option>
+                                    <option  value="HPC">HPC</option>
+                                    <option  value="BIO INFO">BIO INFO</option>
+                                </select>
+                            ) : (
+                                <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
+                                    <option  value="ACAD A" >ACAD A</option>
+                                    <option  value="ACAD B">ACAD B</option>
+                                    <option  value="ACAD C">ACAD C</option>
+                                    <option  value="ISIL A">ISIL A</option>
+                                    <option  value="ISIL B">ISIL B</option>
+                                    <option  value="GTR">GTR</option>
+                                </select>
+                            )}
                         </div>
                     </div>
                 )}

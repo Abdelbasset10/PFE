@@ -46,8 +46,6 @@ const Modal = () => {
         
         dispatch(closeModal())
     }
-    console.log(subjectId)
-    console.log(subjects)
     const getTheSubject = subjects.find((s)=>s._id === subjectId)
    
     const getTheAnnounce = announces.find((s)=>s._id === announceId) || hisAnnounces.find((s)=>s._id === announceId)

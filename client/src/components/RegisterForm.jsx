@@ -86,11 +86,7 @@ const RegisterForm = () => {
         </div>
         <button className='bg-pfe-blue text-pfe-white py-3 shadow-lg' >Sign Up</button>
       </form>
-      <button className='w-full py-3 flex items-center justify-center gap-4 text-pfe-blue  my-4 border-2 border-[#E6E6E6]'>
-        <img src={google} alt="google Photo" className='w-6 h-6' />
-        <p>Sign Up with Google</p>
-      </button>
-      <div className='flex items-center gap-2' >
+      <div className='flex items-center gap-2 my-4' >
         <p>Already Have Account ?</p>
         <Link to='/login' >
           <p className='text-pfe-blue cursor-pointer' >Sign In</p>

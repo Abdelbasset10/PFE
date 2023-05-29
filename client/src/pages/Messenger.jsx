@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { people } from '../data'
-import cat from '../assets/Cat03.jpg'
+import defaultImg from '../assets/user.png'
 import { MdCall} from 'react-icons/md'
 import {FaVideo} from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
@@ -95,7 +95,7 @@ const Messenger = () => {
                 <div>
                 <div className='flex items-center justify-between border-b-[1px] pb-[1rem]  '>
                     <div className='flex items-center gap-2 px-2 lg:px-6' >
-                        <img src={cat} alt="userImg" className='w-10 h-10 rounded-[50%]' />
+                        <img src={freind.profilePicture ? freind.profilePicture : defaultImg} alt="userImg" className='w-10 h-10 rounded-[50%]' />
                         <p className='text-pfe-blue text-xl'>{freind?.name}</p>
                     </div>
                     <div className='flex gap-4 md:px-2 lg:px-6' >

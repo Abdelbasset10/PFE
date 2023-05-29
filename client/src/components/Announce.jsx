@@ -37,7 +37,7 @@ const Announce = ({a}) => {
             <img src={admin?.profilePicture ? admin?.profilePicture : imgDefault} alt="userImage" className='w-10 h-10 rounded-[50%] cursor-pointer' onClick={()=>navigate(`/profile/${admin._id}`)} />
             <div>
               <p className='font-bold' >{admin?.name}</p>
-              <p>24/03/2023</p>
+              <p>25/05/2023</p>
             </div>
           </div>
           {User._id === a.admin &&  (

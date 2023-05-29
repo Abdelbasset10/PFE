@@ -76,7 +76,7 @@ const Profile = () => {
     if(isNewSubject){
         return <Modal />
     }
-   
+    console.log(user)
     return (
         <>
         <Navbar />
@@ -101,16 +101,16 @@ const Profile = () => {
                             <p className='text-pfe-blue' >{user.type}</p>
                         </div>
                         {User?.type ==="student" && !user?.isBinome && User?._id !== id && user?.type === "student" && (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addBinome({UserId,userId,toast}))} >Be Your Binome</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addBinome({UserId,userId,toast}))} >Request Binome</p>
                         )}
                         {User?.type ==="student" && user?.isBinome && User?.hisBinome?.includes(user?._id) && User?._id !== id && (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(beNoBinome({UserId,userId,toast}))} >Remove from your Binome</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && user?.isVision && !User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addEncadreur({UserId,binomeId,userId,toast}))} >Be Your Encadreur</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addEncadreur({UserId,binomeId,userId,toast}))} >Request Encadreur</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(removeEncadreur({UserId,binomeId,userId,toast}))} >Remove from Your Encadreur</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(removeEncadreur({UserId,binomeId,userId,toast}))} >Request remove Encadreur</p>
                         )}
                     </div>
                 </div>
@@ -162,7 +162,8 @@ const Profile = () => {
                                     ) }
                                 </div>
                             </div>
-                            <p>Section : <span className='text-pfe-blue' >ACAD C</span></p>
+                            <p>Level : <span className='text-pfe-blue' >{user?.lvl}</span></p>
+                            <p>Section : <span className='text-pfe-blue' >{user?.section}</span></p>
                         </div>
                     )}
                     
