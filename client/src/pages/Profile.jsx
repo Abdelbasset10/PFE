@@ -76,7 +76,7 @@ const Profile = () => {
     if(isNewSubject){
         return <Modal />
     }
-    console.log(user)
+    console.log({User,user})
     return (
         <>
         <Navbar />
@@ -103,7 +103,7 @@ const Profile = () => {
                         {User?.type ==="student" && !user?.isBinome && User?._id !== id && user?.type === "student" && (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addBinome({UserId,userId,toast}))} >Request Binome</p>
                         )}
-                        {User?.type ==="student" && user?.isBinome && User?.hisBinome?.includes(user?._id) && User?._id !== id && (
+                        {User?.type ==="student" && user?.isBinome && user?.hisBinome?.includes(User?._id) && User?._id !== id && (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(beNoBinome({UserId,userId,toast}))} >Remove from your Binome</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && user?.isVision && !User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
