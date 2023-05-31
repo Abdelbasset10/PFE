@@ -23,7 +23,7 @@ export const updateStudent = (id,userInfo) => API.patch(`/student/${id}`,userInf
 export const searchUser = (userName) => API.get(`/student/search?userName=${userName}`)
 export const searchNoBinome = (userName) => API.get(`/student/no-binomes/search?userName=${userName}`)
 export const addBinome = (id,userId) => API.patch(`/student/add-binome/${id}`,{studentId:userId}) 
-export const beNoBinome = (myId,binomeId) => API.patch(`/student/be-nobinome/${binomeId}`,{studentId:myId}) 
+export const beNoBinome = (id,userId) => API.patch(`/student/be-nobinome/${id}`,{studentId:userId}) 
 export const addEncadreur = (myId,binomeId,teacherId) => API.patch(`/student/add-teacher/${teacherId}`,{myId,binomeId})
 export const removeEncadreur = (myId,binomeId,teacherId) => API.patch(`/student/remove-teacher/${teacherId}`,{myId,binomeId})  
 
@@ -68,7 +68,12 @@ export const getUserConversations = (userId) => API.get(`/conversation/${userId}
 export const getMessagesConversation = (convId) => API.get(`/messenger/${convId}`)
 export const createMessage = (convId,senderId,text) => API.post('/messenger',{conversationId:convId,sender:senderId,text})
 
+//Notifications
 
+export const createNotification = (receiver,type) => API.post('/notification',{receiver,type})
+export const getUserNotifications = (userId) => API.get(`/notification/${userId}`)
+export const acceptedNotification = (notificationId) => API.patch(`/notification/accept/${notificationId}`)
+export const declinedNotification = (notificationId) => API.patch(`/notification/decline/${notificationId}`)
 
 
 

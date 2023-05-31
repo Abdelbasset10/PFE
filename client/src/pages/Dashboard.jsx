@@ -34,7 +34,7 @@ const Dashboard = () => {
 
 
   const [chartData, setChartData] = useState({
-    labels:['Monome', 'Binome'] , 
+    labels:['Binome', 'Monome'] , 
     datasets: [
       {
         label: "Users Gained ",
@@ -79,7 +79,7 @@ const Dashboard = () => {
           <StatUsers />
           <div className='flex flex-col mt-8' >
             <PieChart chartData={chartData} />
-            <div className='flex-[1] border-[pfe-blac] border-[1px] px-4 py-2 h-[20rem] overflow-y-scroll' >
+            <div className='flex-[1] border-[pfe-blac] border-[1px] px-4 py-2 h-[20rem] overflow-y-auto' >
               <h1 className='text-xl text-pfe-blue mb-4' >La liste des encadreurs </h1>
               <div className='flex justify-between items-center' >
                 <p>Encadreur</p>

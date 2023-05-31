@@ -57,8 +57,9 @@ export const getBinomes = createAsyncThunk("getBinomes/student",async (_,{reject
     }
 })
 
-export const addBinome = createAsyncThunk("addBinome/student",async ({UserId,userId,toast},{rejectWithValue}) => {
+export const addBinome = createAsyncThunk("addBinome/student",async ({userId,UserId,toast},{rejectWithValue}) => {
     try {
+        console.log("asd")
         const {data} = await api.addBinome(userId,UserId)
         toast.info("you have been Add that Student to your Binome")
         return data
@@ -68,9 +69,9 @@ export const addBinome = createAsyncThunk("addBinome/student",async ({UserId,use
     }
 })
 
-export const beNoBinome = createAsyncThunk("beNoBinome/student",async ({UserId,userId,toast},{rejectWithValue}) => {
+export const beNoBinome = createAsyncThunk("beNoBinome/student",async ({userId,UserId,toast},{rejectWithValue}) => {
     try {
-        const {data} = await api.beNoBinome(UserId,userId)
+        const {data} = await api.beNoBinome(userId,UserId)
         toast.warning("you have been remove that Student from your Binome")
         return data
     } catch (error) {
@@ -92,7 +93,7 @@ export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({User
 export const removeEncadreur = createAsyncThunk("removeEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
     try {
         const {data} = await api.removeEncadreur(UserId,binomeId,userId)
-        toast.warning("you have been Add that Teacher to be your Encadreur")
+        toast.warning("you have Remove the binome from ur lists!")
         return data
     } catch (error) {
         toast.error(error.response.data.message)
@@ -318,6 +319,7 @@ const studentSlice = createSlice({
         },
         [beNoBinome.fulfilled] : (state,action) => {
             state.isLoading = false
+            console.log(action.payload)
             state.students.map((s)=>s._id === action.payload.user._id ? action.payload : s)
             localStorage.setItem("profile",JSON.stringify({...action.payload}))
         },

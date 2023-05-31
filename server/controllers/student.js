@@ -135,9 +135,13 @@ const addBinome = async (req, res) => {
     }
     await Me.updateOne({ isBinome: true, hisBinome: myBinome._id });
     await myBinome.updateOne({ isBinome: true, hisBinome: Me._id });
-    return res
-      .status(200)
-      .json({ message: "You have been added Binome succesffully !" });
+    const updatedBinome = await Student.findById(myBinome._id)
+    const token = jwt.sign(
+      { userId: updatedBinome._id, userName: updatedBinome.name, userType: "student" },
+      "JWT_SECRET",
+      { expiresIn: "1d" }
+    );
+    return res.status(200).json({ token, user: updatedBinome });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -159,9 +163,14 @@ const BeNoBinome = async (req, res) => {
         .status(401)
         .json({ message: "This Student has already no binome !!" });
     }
-    await Me.updateOne({ isBinome: false, hisBinome: null });
-    await myBinome.updateOne({ isBinome: false, hisBinome: null });
-    return res.status(200).json({ message: "You are now without Binome !" });
+    const ME1 = await Student.findByIdAndUpdate(studentId,{ isBinome: false, hisBinome: null },{new:true})
+    await Student.findByIdAndUpdate(id,{ isBinome: false, hisBinome: null },{new:true}) 
+    const token = jwt.sign(
+      { userId: ME1._id, userName: ME1.name, userType: "student" },
+      "JWT_SECRET",
+      { expiresIn: "1d" }
+    );
+    return res.status(200).json({ token, user: ME1 });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -190,13 +199,13 @@ const addTeacher = async (req, res) => {
     await me.updateOne({ $push: { hisTeacher: teacher } });
     await myBinome.updateOne({ $push: { hisTeacher: teacher } });
     await teacher.updateOne({ $push: { studentsVision: [me, myBinome] } });
-    const updatedMe = await Student.findById(me._id);
+    const updatedTeacher = await Teacher.findById(teacher._id);
     const token = jwt.sign(
-      { userId: updatedMe._id, userName: updatedMe.name, userType: "student" },
+      { userId: updatedTeacher._id, userName: updatedTeacher.name, userType: "teacher" },
       "JWT_SECRET",
       { expiresIn: "1d" }
     );
-    return res.status(200).json({ token, user: updatedMe });
+    return res.status(200).json({ token, user: updatedTeacher });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -226,13 +235,13 @@ const removeTeacher = async (req, res) => {
     await myBinome.updateOne({ $pull: { hisTeacher: teacher._id } });
     await teacher.updateOne({ $pull: { studentsVision: me._id } });
     await teacher.updateOne({ $pull: { studentsVision: myBinome._id } });
-    const updatedMe = await Student.findById(me._id);
+    const updatedTeacher = await Teacher.findById(teacher._id);
     const token = jwt.sign(
-      { userId: updatedMe._id, userName: updatedMe.name, userType: "student" },
+      { userId: updatedTeacher._id, userName: updatedTeacher.name, userType: "teacher" },
       "JWT_SECRET",
       { expiresIn: "1d" }
     );
-    return res.status(200).json({ token, user: updatedMe });
+    return res.status(200).json({ token, user: updatedTeacher });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

@@ -20,6 +20,9 @@ const RegisterForm = () => {
   const handleSubmit =async (e) => {
     e.preventDefault()
     dispatch(register({userInfo:{...userInfo,type:userInfo.userType,name:`${userInfo.firstName} ${userInfo.lastName}`},toast,navigate}))
+    setTimeout(()=>{
+      window.location.reload()
+    },[1000])
   }
   return (
     <div>
@@ -61,7 +64,8 @@ const RegisterForm = () => {
             </div>
             <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between ' >
             <label>Select your Section</label>
-            <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
+            {userInfo?.lvl === "L3" ? (
+              <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
                 <option  value="ACAD A" >ACAD A</option>
                 <option  value="ACAD B">ACAD B</option>
                 <option  value="ACAD C">ACAD C</option>
@@ -69,6 +73,16 @@ const RegisterForm = () => {
                 <option  value="ISIL B">ISIL B</option>
                 <option  value="GTR">GTR</option>
             </select>
+            ) : (
+              <select className='outline-none' name="section" value={userInfo.section} onChange={handleChange} >
+                <option  value="IL" >IL</option>
+                <option  value="SII">SII</option>
+                <option  value="SSI">SSI</option>
+                <option  value="MIV">MIV</option>
+                <option  value="HPC">ISIL B</option>
+                <option  value="BIO INFO">BIO INFO</option>
+              </select>
+            )}
           </div>
           </div>
         )}

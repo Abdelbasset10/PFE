@@ -67,22 +67,22 @@ const getSubjectByField = async (req,res) => {
         const result = await Promise.all(getTeacher.map(async(g)=>{
             const data = await Subject.find({teacher:g._id})
             // if(!data){
-            //     console.log("2")
+            //     
             //     subjects = []
             // }
             if(data){
-                console.log("2")
+                
                 data.map((d)=>{
                     subjects.push(d)
                 })
-                console.log(subjects)
+                
                 return data
             }
         }))
-        console.log(subjects)
+      
         // getTeacher.map(async (g)=>{
         //     const result = await Subject.find({teacher:g._id})
-        //     console.log("1")
+        //   
         //     result.map((r)=>{
         //         subjects.push(r)
         //     })
@@ -98,7 +98,7 @@ const getSubjectByField = async (req,res) => {
 const filterSubjects = async (req,res) => {
     try {
         const {filtredSubjects} = req.body;
-        console.log(req.body)
+    
         const getSubjects = await Promise.all(filtredSubjects.map(async (element)=>{
             const subject = await Subject.find({subjectField:element})
             return subject

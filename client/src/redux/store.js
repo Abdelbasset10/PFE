@@ -7,6 +7,7 @@ import subjectSlice from './features/subjectSlice'
 import announceSlice from './features/announceSlice'
 import adminSlice from './features/adminSlice'
 import messengerSlice from './features/messengerSlice'
+import notificationSlice from './features/notificationSlice'
 
 const store = configureStore({
     reducer:{
@@ -17,7 +18,8 @@ const store = configureStore({
         subject:subjectSlice,
         announce:announceSlice,
         admin:adminSlice,
-        messenger:messengerSlice
+        messenger:messengerSlice,
+        notification:notificationSlice
     }
 })
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useParams, useNavigate, useLocation} from 'react-router-dom'
 import logo from '../assets/usthb.png'
 
@@ -14,14 +14,18 @@ import { searchNoBinome } from '../redux/features/studentSlice'
 import { getStudent, searchUser } from '../redux/api'
 import { toast } from 'react-toastify'
 import { searchEncadreur } from '../redux/features/teacherSlice'
+import { userNotifications } from '../redux/features/notificationSlice'
+import Notification from './Notification'
 
 const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {pathname} = useLocation()
+  const [showNotfications,setShowNotifications] = useState(false)
   const [text,setText] = useState("")
   const user = useSelector((state)=>state.auth?.authData?.user)
-  const profileId = pathname.split('/')[2]
+  const userId = user?._id
+  const {notifications} = useSelector((state)=>state.notification)
   const handleSubmit = async (e) => {
     e.preventDefault()
     if(pathname === '/'){
@@ -35,7 +39,6 @@ const Navbar = () => {
       navigate(`/teachers?userName=${text}`)
     }
     else{
-      console.log("sd")
       const {data} = await searchUser(text)
       if(!data){
         toast.error("there is no user with that name!")
@@ -44,8 +47,12 @@ const Navbar = () => {
       navigate(`/profile/${data?._id}`)
     }
   }
+
+  useEffect(()=>{
+    dispatch(userNotifications(userId))
+  },[])
   return (
-    <nav className='w-full bg-[#F9F9F9] z-10 sticky top-0 px-4 sm:px-8 py-8 md:py-4 md:h-[14vh]' >
+    <nav className='relative w-full bg-[#F9F9F9] z-10 sticky top-0 px-4 sm:px-8 py-8 md:py-4 md:h-[14vh] ' >
         <div className='flex justify-between items-center' >
             <Link to='/' >
               <img src={logo} alt="usthb" className='w-16 h-16' />
@@ -55,7 +62,21 @@ const Navbar = () => {
                 <input type="text" placeholder='Search...' className='outline-none bg-transparent w-full' onChange={(e)=>setText(e.target.value)} />        
             </form>
             <div className='flex items-center gap-4' >
-                <GrNotification className='text-3xl cursor-pointer' />
+                <div className='' >
+                  <GrNotification className='text-3xl cursor-pointer' onClick={()=>setShowNotifications(!showNotfications)} />
+                  {showNotfications && (
+                    <div className='absolute max-h-[50vh] overflow-y-auto rounded-lg top-20 right-2 sm:right-10 px-4 py-2 bg-[#F9F9F9] text-pfe-black border-[1px] border-pfe-blue flex flex-col gap-4'>
+                      {notifications.length > 0 ? notifications.map((notification,index)=>(
+                        <Notification notification={notification} key={index} />
+                      )) : (
+                        <div>
+                          <p>Don't have notification for the moment!</p>
+                        </div>
+                      )}
+
+                    </div>
+                  )}
+                </div>
                 <AiOutlineEdit className='text-3xl cursor-pointer' />
                 <Link to={`/profile/${user?._id}`} >
                   <img src={user?.profilePicture ? user.profilePicture : imgDefault } alt="user photo" className='w-10 h-10 rounded-[50%]' />

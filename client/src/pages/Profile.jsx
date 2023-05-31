@@ -20,6 +20,7 @@ import UserName from '../components/UserName'
 import Sidebar from '../components/Sidebar'
 import { createConversation } from '../redux/features/messengerSlice'
 import Navbar from '../components/Navbar'
+import { newNotification } from '../redux/features/notificationSlice'
 
 
 const Profile = () => {
@@ -42,6 +43,32 @@ const Profile = () => {
             navigate('/messenger')
         }
     }
+
+    const hndleRequestEncadreur = () => {
+        if(!User.isBinome){
+            toast.error("you have to find Binome before request Encadreur!")
+            return
+        }
+        const type="encadreur"
+        dispatch(newNotification({userId,type,toast}))
+    }
+
+    const handleAddBinome = () => {
+        if(User?.isBinome){
+            toast.error("You already have binome !")
+            return
+        }
+        if(user?.isBinome){
+            toast.info(` ${user?.name} hars already binome !`)
+            return
+        }
+        if(User?.lvl !== user?.lvl){
+            toast.error(`${user?.name} is not ${User?.lvl}!`)
+            return
+        }
+        const type="binome"
+        dispatch(newNotification({userId,type,toast}))
+    }
     useEffect(()=>{  
                 dispatch(allTeachers())      
                 dispatch(teacherSubjects(id)) 
@@ -61,7 +88,7 @@ const Profile = () => {
    
    
     
-    
+   
     if(!user){
         return <div className='flex-[9] flex justify-center mt-10 text-xl sm:text-3xl' >
             <p>THERE IS NO USER WITH THAT id !!!</p>
@@ -76,7 +103,7 @@ const Profile = () => {
     if(isNewSubject){
         return <Modal />
     }
-    console.log({User,user})
+
     return (
         <>
         <Navbar />
@@ -101,16 +128,27 @@ const Profile = () => {
                             <p className='text-pfe-blue' >{user.type}</p>
                         </div>
                         {User?.type ==="student" && !user?.isBinome && User?._id !== id && user?.type === "student" && (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addBinome({UserId,userId,toast}))} >Request Binome</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={handleAddBinome} >Request Binome</p>
                         )}
                         {User?.type ==="student" && user?.isBinome && user?.hisBinome?.includes(User?._id) && User?._id !== id && (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(beNoBinome({UserId,userId,toast}))} >Remove from your Binome</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>{
+                                dispatch(beNoBinome({userId,UserId,toast}))
+                            }} >Remove from your Binome</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && user?.isVision && !User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(addEncadreur({UserId,binomeId,userId,toast}))} >Request Encadreur</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={hndleRequestEncadreur} >Request Encadreur</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(removeEncadreur({UserId,binomeId,userId,toast}))} >Request remove Encadreur</p>
+                        )}
+                        {User?.type ==="teacher" && user?.type === "student" && User?.studentsVision?.includes(user?._id) && User?._id !== id && (
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>{
+                                const UserId = user?._id
+                                const binomeId = user?.hisBinome
+                                const userId = User?._id
+                                console.log(UserId)
+                                dispatch(removeEncadreur({UserId,binomeId,userId,toast}))}
+                            } >Remove Binome from ur Lists</p>
                         )}
                     </div>
                 </div>
