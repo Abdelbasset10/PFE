@@ -52,7 +52,7 @@ const Navbar = () => {
     dispatch(userNotifications(userId))
   },[])
   return (
-    <nav className='relative w-full bg-[#F9F9F9] z-10 sticky top-0 px-4 sm:px-8 py-8 md:py-4 md:h-[14vh] ' >
+    <nav className='relative w-full bg-[#F9F9F9] z-10 fixed sticky top-0 px-4 sm:px-8 py-8 md:py-4 md:h-[14vh] ' >
         <div className='flex justify-between items-center' >
             <Link to='/' >
               <img src={logo} alt="usthb" className='w-16 h-16' />

@@ -77,7 +77,7 @@ const Dashboard = () => {
       <div className='flex-[9]  '>
         <div className='px-4 sm:px-20 py-10 border-l-[1px] border-t-[1px] shadow-lg h-full' >
           <StatUsers />
-          <div className='flex flex-col mt-8' >
+          <div className='flex flex-col lg:flex-row mt-8' >
             <PieChart chartData={chartData} />
             <div className='flex-[1] border-[pfe-blac] border-[1px] px-4 py-2 h-[20rem] overflow-y-auto' >
               <h1 className='text-xl text-pfe-blue mb-4' >La liste des encadreurs </h1>

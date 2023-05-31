@@ -23,18 +23,19 @@ const Binomes = () => {
   return (
     <>
     <Navbar />
-    <div className='flex' >
+    <div className='flex ' >
         <Sidebar />
-        <div className='flex-[9]  ' >
+        <div className='flex-[9] h-[86vh]  ' >
             <div className='px-4 sm:px-20 py-10 border-l-[1px] border-t-[1px] shadow-lg h-full' >
-                <Filter title="search Binome" text="Find your Binome" />
-                <div className=' overflow-x-visible ' >
+                <Filter title="search Binome" text="Find your Binome" />   
                     {noBinomes.length === 0 ? (
                         <div>
                             <p>There is no Binomes for now ...</p>
                         </div>
                     ) : (
-                    <table className='w-full text-left' >
+                    <div className='overflow-x-auto max-h-[90%] overflow-y-scroll ' >
+                        <table className=' w-full overflow-x-auto text-left' >
+                        <tbody className=' '>
                         <tr className='text-pfe-blue' >
                             <th className='' >Student</th>
                             <th className=''>Level</th>
@@ -45,34 +46,31 @@ const Binomes = () => {
                         {noBinomes?.map((p,index)=>{
                             if(p?._id !== UserId){
                             return (
-                                <tr key={index} className="cursor-pointer hover:bg-[#F9F9F9]" onClick={()=>navigate(`/profile/${p._id}`)} >
+                                
+                                    <tr key={index}  className="cursor-pointer hover:bg-[#F9F9F9] " onClick={()=>navigate(`/profile/${p._id}`)} >
                                     <td className='flex items-center gap-2 py-2  ' >
                                         <img src={p.profilePicture ? p.profilePicture : imgDefault} alt="student Img" className='w-8 h-8 rounded-[50%]' />
                                         <p>{p.name}</p>
                                     </td>
-                                    <td className='py-2 ' >{p.lvl}</td>
-                                    <td className='py-2 ' >{p.pfeType ? p.pfeType : 'Not Selected yet'}</td>
+                                    <td className='py-2  ' >{p.lvl}</td>
+                                    <td className='py-2  ' >{p.pfeType ? p.pfeType : 'Not Selected yet'}</td>
                                     <td className='py-2 ' >{p.section}</td>
                                     <td className='py-2  ' >
                                         <div className='p-2 bg-[#F9F9F9] hover:bg-pfe-blue rounded-lg w-fit' >
                                             <MdMessage className='text-xl text-pfe-blue hover:text-pfe-white   ' />
                                         </div>
                                     </td>
-                                </tr>
+                                 </tr>
+                               
                             )
                         }
                         })}
+                         </tbody>
                     </table>
+                    </div>
                     )}
-                    {/* <div className='flex justify-end ' >
-                        {User?.type ==="student" && !User?.isBinome && (
-                            <button className='flex items-center gap-2 mt-4 py-1 px-4 text-pfe-white bg-pfe-blue rounded-lg' >
-                                <IoIosAddCircleOutline className='text-pfe-white text-2xl' />
-                                <p>{User?.isBinome ? 'Add your self' : 'Remove Your self'}</p>
-                            </button>
-                        )}
-                    </div> */}
-                </div>
+                    
+              
             </div>
         </div>
     </div>

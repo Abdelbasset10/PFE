@@ -40,6 +40,7 @@ const Teachers = () => {
 
             ): (
                 <table className='w-full text-left' >
+                    <tbody>
                     <tr className='text-pfe-blue' >
                         <th className='' >Teacher</th>
                         <th className=''>Level</th>
@@ -63,6 +64,7 @@ const Teachers = () => {
                             </tr>
                         )
                     })}
+                    </tbody>
             </table>
             )}
             {User?.type ==="teacher" && !User?.isVision && (

@@ -23,7 +23,7 @@ const StatUsers = () => {
 
 
     return (
-        <div className='flex gap-14 flex-wrap items-center border-[1px] border-pfe-black p-2 text-sm'>
+        <div className='flex gap-14 flex-wrap w-[80%] xl:w-full items-center border-[1px] border-pfe-black p-2 text-sm'>
             <div className='flex gap-2 items-center' >
                 <MdPeopleAlt className='text-2xl' />
                 <div>
