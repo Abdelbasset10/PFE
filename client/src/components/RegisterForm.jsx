@@ -79,7 +79,7 @@ const RegisterForm = () => {
                 <option  value="SII">SII</option>
                 <option  value="SSI">SSI</option>
                 <option  value="MIV">MIV</option>
-                <option  value="HPC">ISIL B</option>
+                <option  value="HPC">HPC</option>
                 <option  value="BIO INFO">BIO INFO</option>
               </select>
             )}

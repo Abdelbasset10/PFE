@@ -68,7 +68,7 @@ const Modal = () => {
     },[subjectId])
     return (
     <div className='  fixed z-20 top-0 w-full bg min-h-screen flex items-center justify-center '>
-        <div className='relative mt-4 sm:mt-0 bg-pfe-white p-4 w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12 flex flex-col items-center  rounded-lg ' >
+        <div className='relative my-4 sm:mt-0 bg-pfe-white h-[90%] overflow-y-auto p-4 w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12 flex flex-col items-center  rounded-lg ' >
             <FaTimes className='absolute top-2 right-4 text-pfe-blue text-3xl cursor-pointer' onClick={()=>dispatch(closeModal())} />
             <h1 className='font-bold text-2xl my-4' >{subjectId ? 'Update' : announceId ? 'Update' : 'Add New'} {isNewSubject ? 'Subject' : 'Announce'}</h1>
             <form className='flex flex-col gap-4' onSubmit={handleSubmit} >

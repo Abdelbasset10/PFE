@@ -5,7 +5,7 @@ const createSubject = async (req,res) => {
     try {
         const {title,description,subjectField,pfeLvl,picture} = req.body
         const newSubject = new Subject({
-            title,description,subjectField,pfeLvl,picture,teacher:req.user.userId
+            title,description,subjectField,pfeLvl,picture,teacher:req.user.userId,createdAt: new Date().toISOString()
         })
         await newSubject.save()
         res.status(201).json(newSubject)

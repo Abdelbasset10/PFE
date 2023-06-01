@@ -7,6 +7,7 @@ import { deleteAnnounce } from '../redux/features/announceSlice'
 import {openUpdateAnnounceModal} from '../redux/features/modalSlice'
 import {toast} from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 
 const Announce = ({a}) => {
@@ -29,6 +30,23 @@ const Announce = ({a}) => {
     }
     getTheAdmin()
   },[a])
+
+  const desc = a?.description.split(' ');
+
+  const renderDescription = () => {
+    return desc.map((word, index) => {
+      if (word.startsWith('http://') || word.startsWith('https://')) {
+        return (
+          <a key={index} href={word} target="_blank" rel="noopener noreferrer" className='text-pfe-blue'>
+            {word}
+          </a>
+        );
+      } else {
+        return <span key={index}>{word} </span>;
+      }
+    });
+  };
+  console.log(a)
   return (
     <div className='border-[1px] shadow-lg' >
       <div className='p-4' >
@@ -37,7 +55,7 @@ const Announce = ({a}) => {
             <img src={admin?.profilePicture ? admin?.profilePicture : imgDefault} alt="userImage" className='w-10 h-10 rounded-[50%] cursor-pointer' onClick={()=>navigate(`/profile/${admin._id}`)} />
             <div>
               <p className='font-bold' >{admin?.name}</p>
-              <p>25/05/2023</p>
+              <p>{moment(a?.createdAt).fromNow()}</p>
             </div>
           </div>
           {User._id === a.admin &&  (
@@ -53,7 +71,7 @@ const Announce = ({a}) => {
             )}
         </div>
         <p className='font-bold text-pfe-blue mt-1' >{a.title}</p>
-        <p className='text-sm sm:text-base' >{a.description}</p>
+        <p className='text-sm sm:text-base' >{renderDescription()}</p>
       </div>
     </div>
   )

@@ -21,7 +21,13 @@ const subjectSchema = mongoose.Schema({
     pfeLvl:{
         type:String,
         enum:["L3","M2"]
+    },createdAt : {
+        type:Date,
+        default: new Date()
     }
-})
+  },
+  
+  { timestamps: true }
+)
 
 module.exports = mongoose.model('Subject',subjectSchema)

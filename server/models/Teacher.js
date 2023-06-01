@@ -34,6 +34,6 @@ const teacherSchema = mongoose.Schema({
         type:Boolean,
         default:false
     }
-})
+},{timestamp:true})
 
 module.exports = mongoose.model('Teacher',teacherSchema)

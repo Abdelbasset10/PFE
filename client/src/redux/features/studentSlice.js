@@ -82,7 +82,7 @@ export const beNoBinome = createAsyncThunk("beNoBinome/student",async ({userId,U
 export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
     try {
         const {data} = await api.addEncadreur(UserId,binomeId,userId)
-        toast.info("you have been Add that Teacher to be your Encadreur")
+        toast.info("you have been accept the bimomes!")
         return data
     } catch (error) {
         toast.error(error.response.data.message)
@@ -93,7 +93,7 @@ export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({User
 export const removeEncadreur = createAsyncThunk("removeEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
     try {
         const {data} = await api.removeEncadreur(UserId,binomeId,userId)
-        toast.warning("you have Remove the binome from ur lists!")
+        toast.warning("you have been Remove the binome from ur lists!")
         return data
     } catch (error) {
         toast.error(error.response.data.message)

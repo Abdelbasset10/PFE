@@ -35,10 +35,13 @@ const ProfileModal = () => {
         e.preventDefault()
         if(User.type ==="student"){
             dispatch(updateStudent({userId,userInfo,toast}))
+            dispatch(closeProfileModal())
         }else if(User.type ==="teacher"){
             dispatch(updateTeacher({userId,userInfo,toast}))
+            dispatch(closeProfileModal())
         }else if(User.type ==="admin"){
             dispatch(updateAdmin({userId,userInfo,toast}))
+            dispatch(closeProfileModal())
         }
     }
 
@@ -68,9 +71,9 @@ const ProfileModal = () => {
     },[User?._id])
     return (
     <div className='  fixed z-20 top-0 w-full bg h-screen flex items-center justify-center '>
-        <div className='relative mt-4 sm:mt-0 bg-pfe-white p-4 w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12 flex flex-col items-center  rounded-lg ' >
+        <div className='relative my-4 sm:mt-0 bg-pfe-white overflow-y-auto h-[90%] p-4 w-11/12 md:w-8/12 lg:w-7/12 xl:w-6/12 flex flex-col items-center  rounded-lg ' >
             <FaTimes className='absolute top-2 right-4 text-pfe-blue text-3xl cursor-pointer' onClick={()=>dispatch(closeProfileModal())} />
-            <h1 className='text-xl font-bold' >Update Your Profile</h1>
+            <h1 className='text-xl font-bold mb-4' >Update Your Profile</h1>
             <form className='flex flex-col gap-4 w-full' onSubmit={handleSubmit} >
                 <input type="text" className='h-10 p-2 outline-none border-[1px] border-[gray] w-full' name='name' value={userInfo.name} onChange={handleChange} />
                 <input type="email" className='h-10 p-2 outline-none border-[1px] border-[gray] w-full' name='email' value={userInfo.email} onChange={handleChange} />
@@ -100,19 +103,21 @@ const ProfileModal = () => {
                         </div>
                     </div>
                 )}
-                        <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
-                            <label>Choose Your Lvl</label>
-                            <div className='flex gap-8' >
-                                <div className='flex gap-1' >
-                                <label>L3</label>
-                                <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"L3"})} />
-                                </div>
-                                <div className='flex gap-1' >
-                                <label>M2</label>
-                                <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"M2"})} />
+                        {User?.type !== "admin" && (
+                            <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
+                                <label>{User?.type === "student" ? "Choose your lvl" : "choose pfe type lvl"}</label>
+                                <div className='flex gap-8' >
+                                    <div className='flex gap-1' >
+                                    <label>L3</label>
+                                    <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"L3"})} />
+                                    </div>
+                                    <div className='flex gap-1' >
+                                    <label>M2</label>
+                                    <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"M2"})} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                         <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
                         <FileInput
                         name="profilePicture"
@@ -124,29 +129,31 @@ const ProfileModal = () => {
                         </div>
                     
                 
-                <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between items-center ' >
-                            <label>Choose Your PFE Type</label>
-                                <div className='grid grid-cols-2' >
-                                    <div className='flex gap-2' >
-                                        <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"web"})} />
-                                        <label>web</label>
-                                    </div>
-                                    <div className='flex gap-2' >
-                                        <input type="checkbox"    onChange={(e)=> setUserInfo({...userInfo,pfeType:"mobile"})} />
-                                        <label>mobile</label>
-                                    </div>
-                                    <div className='flex gap-2' >
-                                        <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"ai"})} />
-                                        <label>ai</label>
-                                    </div>
-                                    <div className='flex gap-2' >
-                                        <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"cyber"})} />
-                                        <label>cyber</label>
-                                    </div>
-                                </div>
-                </div>
+                {User?.type !== "admin" && (
+                    <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between items-center ' >
+                    <label>Choose Your PFE Type</label>
+                        <div className='grid grid-cols-2' >
+                            <div className='flex gap-2' >
+                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"web"})} />
+                                <label>web</label>
+                            </div>
+                            <div className='flex gap-2' >
+                                <input type="checkbox"    onChange={(e)=> setUserInfo({...userInfo,pfeType:"mobile"})} />
+                                <label>mobile</label>
+                            </div>
+                            <div className='flex gap-2' >
+                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"ai"})} />
+                                <label>ai</label>
+                            </div>
+                            <div className='flex gap-2' >
+                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"cyber"})} />
+                                <label>cyber</label>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <div className='flex flex-wrap items-center justify-center gap-4' >
-                    <p className='px-10 py-1 border-[1px] border-red-600 rounded-lg text-red-600 cursor-pointer' > Cancel</p>
+                    <p className='px-10 py-1 border-[1px] border-red-600 rounded-lg text-red-600 cursor-pointer' onClick={()=>dispatch(closeProfileModal())} > Cancel</p>
                     <button className='px-10 py-1 border-[1px] border-pfe-blue rounded-lg text-pfe-blue'>Update</button>
                 </div>
             </form>

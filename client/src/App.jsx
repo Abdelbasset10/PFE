@@ -16,18 +16,31 @@ import { ToastContainer} from 'react-toastify';
 import { setUser } from './redux/features/authSlice'
 import Messenger from './pages/Messenger'
 import Dashboard from './pages/Dashboard'
+import ProfileModal from './components/ProfileModal'
+import Modal from './components/Modal'
 
 
 const App = () => {
   const dispatch = useDispatch()
   const [showSide, setShowSide] = useState(false)
   const User = JSON.parse(localStorage.getItem("profile"))
-  console.log(User)
+  const {isNewSubject, isNewAnnounce, updateProfile} = useSelector((state)=>state.modal)
+
   //const User = useSelector((state)=>state.auth?.authData?.user)
 
   useEffect(()=>{ 
     dispatch(setUser())
   },[])
+
+  if(updateProfile){
+    return <ProfileModal />
+}
+if(isNewAnnounce){
+    return <Modal />
+}
+if(isNewSubject){
+    return <Modal />
+}
 
   return (
     <BrowserRouter>

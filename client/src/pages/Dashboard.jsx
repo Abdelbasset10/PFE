@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
 import StatUsers from '../components/StatUsers'
-import cat from '../assets/Cat03.jpg'
-
+import userImg from '../assets/user.png'
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { useState } from "react";
@@ -85,13 +84,13 @@ const Dashboard = () => {
                 <p>Encadreur</p>
                 <p>Pfe Type</p>
               </div>
-              <div className='flex flex-col gap-4 mt-4' >
+              <div className='flex flex-col gap-4 mt-4 h-[10rem] overflow-y-auto' >
                 {encadreursCopy.map((e,index)=>{
                   return (
                     <div key={index} >
                       <div className='flex items-center justify-between' >
                         <div className='flex gap-2 items-center' >
-                          <img src={cat} alt="profImg" className='w-10 h-10 rounded-[50%]'/>
+                          <img src={e.profilePicture ? e.profilePicture : userImg} alt="profImg" className='w-10 h-10 rounded-[50%]'/>
                           <p>{e.name}</p>
                         </div>
                         <p className='' >{e.pfeType}</p>

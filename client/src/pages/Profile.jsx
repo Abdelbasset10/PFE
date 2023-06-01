@@ -94,15 +94,7 @@ const Profile = () => {
             <p>THERE IS NO USER WITH THAT id !!!</p>
         </div>
     }
-    if(updateProfile){
-        return <ProfileModal />
-    }
-    if(isNewAnnounce){
-        return <Modal />
-    }
-    if(isNewSubject){
-        return <Modal />
-    }
+    
 
     return (
         <>
@@ -230,7 +222,7 @@ const Profile = () => {
                 <p>There is no subjects for the moment</p>
             )
             )}
-            {User.type === "admin" && (
+            {User.type === "admin" && User?._id === id && (
                     <div className='items-start self-start w-full mt-4 ' >
                     <div className='flex flex-col-reverse sm:flex-row items-center mb-4 justify-between' >
                         <h1 className='text-3xl font-bold' >My Announcements : </h1>

@@ -4,7 +4,7 @@ const createAnnounce = async (req,res) => {
     try {
         const {title,description} = req.body
         const newAnnounce = new Announce({
-            title,description,admin:req.user.userId
+            title,description,admin:req.user.userId,createdAt: new Date().toISOString()
         })
         await newAnnounce.save()
         res.status(201).json(newAnnounce)

@@ -8,6 +8,7 @@ import {openUpdateSubjectModal} from '../redux/features/modalSlice'
 import Modal from './Modal'
 import { allSubjects, deleteSubject } from '../redux/features/subjectSlice'
 import {toast} from 'react-toastify'
+import moment from 'moment'
 
 const Subject = ({s}) => {
 
@@ -33,9 +34,26 @@ const Subject = ({s}) => {
     getTheTeacher()
   },[s])
 
+  const desc = s?.description.split(' ');
 
+  const renderDescription = () => {
+    return desc.map((word, index) => {
+      if (word.startsWith('http://') || word.startsWith('https://')) {
+        return (
+          <a key={index} href={word} target="_blank" rel="noopener noreferrer" className='text-pfe-blue'>
+            {word}
+          </a>
+        );
+      } else {
+        return <span key={index}>{word} </span>;
+      }
+    });
+  };
 
+  const text = renderDescription()
+  const slicedText = text.splice(0,40)
   
+
   return (
     <div className='border-[1px] shadow-lg rounded-lg' >
       <div className='p-4' >
@@ -44,7 +62,7 @@ const Subject = ({s}) => {
             <img src={teacher?.profilePicture ? teacher?.profilePicture : imgDefault} alt="userImage" className='w-10 h-10 rounded-[50%] cursor-pointer' onClick={()=>navigate(`/profile/${teacher._id}`)} />
             <div>
               <p className='font-bold' >{teacher?.name}</p>
-              <p>24/03/2023</p>
+              <p>{moment(s?.createdAt).fromNow()}</p>
             </div>
           </div>
           {User._id === s?.teacher &&  (
@@ -61,7 +79,7 @@ const Subject = ({s}) => {
         </div>
         <p className='font-bold text-pfe-blue mt-1' >{s?.title}</p>
         
-        <p className='text-sm sm:text-base' >{readMore ? s?.description : s?.description.slice(0,500)} ...{readMore ? <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(false)} >read less</span> : <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(true)}>read More</span> }</p>
+        <p className='text-sm sm:text-base' >{readMore ? renderDescription(): slicedText} ...{readMore ? <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(false)} >read less</span> : <span className='text-pfe-blue cursor-pointer' onClick={()=>setReadMore(true)}>read More</span> }</p>
         <p className='text-pfe-blue' >#{s?.subjectField} #{s?.pfeLvl}</p>
         {s?.picture && (
           <img src={s?.picture} alt="subject Image" className='w-full h-[20rem] object-contain' />
