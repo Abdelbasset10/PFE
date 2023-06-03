@@ -77,43 +77,109 @@ const subjectSlice = createSlice({
     },
     reducers:{
         filterSubjects :(state,action) =>{
-            var newSubjects = []
-            if(action.payload.subjectType.length>0 && !action.payload.subjectLvl){
+            let filtredSubjects1 = []
+            let filtredSubjects2 = []
+            let filtredSubjects3 = []
+            if(action.payload.subjectType.length>0 && !action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
                     const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
                     if(result.length >0){
                         result.map((r)=>{
-                            newSubjects = [...newSubjects,r]
+                            filtredSubjects1 = [...filtredSubjects1,r]
                         })
                     }
                 })
-                state.subjects = newSubjects
-            }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl){
+                state.subjects = filtredSubjects1
+            }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && !action.payload.encadreurType){
                 const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
                 if(result.length >0){
                     result.map((r)=>{
-                        newSubjects = [...newSubjects,r]
+                        filtredSubjects1 = [...filtredSubjects1,r]
                     })
                 }
-                state.subjects = newSubjects
-            }else if(action.payload.subjectType.length>0 && action.payload.subjectLvl){
-                let finalResult = []
+                state.subjects = filtredSubjects1
+            }else if(action.payload.subjectType.length>0 && action.payload.subjectLvl && !action.payload.encadreurType){
+                
                 const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
                 if(result.length >0){
                     result.map((r)=>{
-                        newSubjects = [...newSubjects,r]
+                        filtredSubjects1 = [...filtredSubjects1,r]
                     })
                 }
                 action.payload.subjectType.map((s)=>{
-                    const result2 = newSubjects.filter((ss)=>ss.subjectField === s) 
+                    const result2 = filtredSubjects1.filter((ss)=>ss.subjectField === s) 
                     if(result2.length >0){
                         result2.map((r)=>{
-                            finalResult = [...finalResult,r]
+                            filtredSubjects2 = [...filtredSubjects2,r]
                         })
                     }
                 })
-                state.subjects = finalResult
-            }else{
+                state.subjects = filtredSubjects2
+            }else if(action.payload.subjectType.length === 0 && !action.payload.subjectLvl && action.payload.encadreurType){
+                const result = state.subjectsCopy.filter((s)=>s.subjectType === action.payload.encadreurType)
+                if(result.length >0){
+                    result.map((r)=>{
+                        filtredSubjects1 = [...filtredSubjects1,r]
+                    })
+                }
+                state.subjects = filtredSubjects1
+            }
+            else if(action.payload.subjectType.length > 0 && !action.payload.subjectLvl && action.payload.encadreurType){
+                action.payload.subjectType.map((s)=>{
+                    const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredSubjects1 = [...filtredSubjects1,r]
+                        })
+                    }
+                })
+                const result2 = filtredSubjects1.filter((s)=>s.subjectType === action.payload.encadreurType)
+                if(result2.length >0){
+                    result2.map((r)=>{
+                        filtredSubjects2 = [...filtredSubjects2,r]
+                    })
+                }
+                state.subjects = filtredSubjects2
+            }
+            else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && action.payload.encadreurType){
+                const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
+                if(result.length >0){
+                    result.map((r)=>{
+                        filtredSubjects1 = [...filtredSubjects1,r]
+                    })
+                }
+                const result2 = filtredSubjects1.filter((s)=>s.subjectType === action.payload.encadreurType)
+                if(result2.length >0){
+                    result2.map((r)=>{
+                        filtredSubjects2 = [...filtredSubjects2,r]
+                    })
+                }
+                state.subjects = filtredSubjects2
+            }
+            else if(action.payload.subjectType.length > 0 && action.payload.subjectLvl && action.payload.encadreurType){
+                action.payload.subjectType.map((s)=>{
+                    const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
+                    if(result.length >0){
+                        result.map((r)=>{
+                            filtredSubjects1 = [...filtredSubjects1,r]
+                        })
+                    }
+                })
+                const result2 = filtredSubjects1.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
+                if(result2.length >0){
+                    result2.map((r)=>{
+                        filtredSubjects2 = [...filtredSubjects2,r]
+                    })
+                }
+                const result3 = filtredSubjects2.filter((s)=>s.subjectType === action.payload.encadreurType)
+                if(result3.length >0){
+                    result3.map((r)=>{
+                        filtredSubjects3 = [...filtredSubjects3,r]
+                    })
+                }
+                state.subjects = filtredSubjects3
+            }
+            else{
                 state.subjects = state.subjectsCopy
             }
             

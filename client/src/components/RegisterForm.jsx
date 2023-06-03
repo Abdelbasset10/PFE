@@ -10,7 +10,7 @@ const RegisterForm = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [userInfo,setUserInfo] = useState({
-    userType:"",firstName:"",lastName:"",   email:"",password:"",confirmPassword:"",lvl:"",section:""
+    userType:"",firstName:"",lastName:"",   email:"",password:"",confirmPassword:"",lvl:"",section:"",zone:""
   })
 
   const handleChange = (e) => {
@@ -20,9 +20,7 @@ const RegisterForm = () => {
   const handleSubmit =async (e) => {
     e.preventDefault()
     dispatch(register({userInfo:{...userInfo,type:userInfo.userType,name:`${userInfo.firstName} ${userInfo.lastName}`},toast,navigate}))
-    setTimeout(()=>{
-      window.location.reload()
-    },[1000])
+    
   }
   return (
     <div>
@@ -47,6 +45,21 @@ const RegisterForm = () => {
         value={userInfo.email}
         onChange={handleChange}
         className='border-2 text-pfe-gray p-2 w-full outline-none ' />
+        {userInfo.userType === "teacher" && (
+          <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >
+            <label>Choose Your Type</label>
+            <div className='flex gap-8' >
+              <div className='flex gap-1' >
+                <label>intern</label>
+                <input type="radio" name='zone' onChange={()=>setUserInfo({...userInfo,zone:"intern"})} />
+              </div>
+              <div className='flex gap-1' >
+                <label>extern</label>
+                <input type="radio" name='zone' onChange={()=>setUserInfo({...userInfo,zone:"extern"})} />
+              </div>
+            </div>
+          </div>
+        )}
         {userInfo.userType === "student" && (
           <div>
             <div className='p-2 border-[1px] text-pfe-gray text-[gray] flex flex-wrap justify-between mb-4 ' >

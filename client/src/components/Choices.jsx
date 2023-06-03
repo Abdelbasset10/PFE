@@ -12,7 +12,8 @@ const Choices = () => {
     const dispatch = useDispatch()
     const [filtredSubjects,setFiltredSubjects] = useState({
         subjectType:[],
-        subjectLvl:""
+        subjectLvl:"",
+        encadreurType:""
     })
     const [filtredStudent,setFiltredStudent] = useState({
         subjectType:[],
@@ -140,6 +141,23 @@ const Choices = () => {
                                         <label>Cyber</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                {pathname !== "/binomes" && (
+                                    <div>
+                                    <h1 className='text-xl mb-1' >Encadreur Type</h1>
+                                    <div className='grid grid-cols-2' >
+                                        <div className='flex gap-2' >
+                                                <input type="radio" name="zone" onChange={(e)=>setFiltredSubjects({...filtredSubjects,encadreurType:"intern"})}  />
+                                                <label>intern</label>
+                                        </div>
+                                        <div className='flex gap-2' >
+                                                <input type="radio" name="zone" onChange={(e)=>setFiltredSubjects({...filtredSubjects,encadreurType:"extern"})}   />
+                                                <label>extern</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                )}
                             </div>
                             <div>
                                 <h1 className='text-xl mb-1' >Level</h1>

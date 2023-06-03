@@ -94,8 +94,9 @@ const teacherslice = createSlice({
         filterEncadreurs : (state,action) => {
             var filtredEncadreurs = [];
             var filtredEncadreurs2 = [];
+            var filtredEncadreurs3 = [];
             console.log(action.payload)
-            if(action.payload.subjectType.length > 0 && !action.payload.subjectLvl){
+            if(action.payload.subjectType.length > 0 && !action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
                     const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
                     if(result.length > 0){
@@ -105,7 +106,7 @@ const teacherslice = createSlice({
                     }
                 })
                 state.encadreurs = filtredEncadreurs
-            }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl){
+            }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && !action.payload.encadreurType){
                 const result = state.encadreursCopy.filter((f)=>f.lvl === action.payload.subjectLvl)
                 if(result.length > 0){
                     result.map((r)=>{
@@ -113,7 +114,7 @@ const teacherslice = createSlice({
                     })
                 }
                 state.encadreurs = filtredEncadreurs
-            }else if(action.payload.subjectType.length >0 && action.payload.subjectLvl){
+            }else if(action.payload.subjectType.length >0 && action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
                     const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
                     if(result.length > 0){
@@ -129,7 +130,71 @@ const teacherslice = createSlice({
                     })
                 }
                 state.encadreurs = filtredEncadreurs2
-            }else{
+            }else if(action.payload.subjectType.length  === 0 && !action.payload.subjectLvl && action.payload.encadreurType){
+                const result = state.encadreursCopy.filter((e)=>e.zone === action.payload.encadreurType)
+                if(result.length > 0){
+                    result.map((r)=>{
+                        filtredEncadreurs = [...filtredEncadreurs,r]
+                    })
+                }
+                state.encadreurs = filtredEncadreurs
+            }
+            else if(action.payload.subjectType.length  > 0 && !action.payload.subjectLvl && action.payload.encadreurType){
+                action.payload.subjectType.map((s)=>{
+                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
+                    if(result.length > 0){
+                        result.map((r)=>{
+                            filtredEncadreurs = [...filtredEncadreurs,r]
+                        })
+                    }
+                })
+                const result2 = filtredEncadreurs.filter((f)=>f.zone === action.payload.encadreurType)
+                if(result2.length > 0){
+                    result2.map((r)=>{
+                        filtredEncadreurs2 = [...filtredEncadreurs2,r]
+                    })
+                }
+                state.encadreurs = filtredEncadreurs2
+            }
+            else if(action.payload.subjectType.length  === 0 && action.payload.subjectLvl && action.payload.encadreurType){
+                console.log({ok:action.payload.subjectLvl,ok2:action.payload.encadreurType})
+                const result = state.encadreursCopy.filter((f)=>f.lvl === action.payload.subjectLvl)
+                if(result.length > 0){
+                    result.map((r)=>{
+                        filtredEncadreurs = [...filtredEncadreurs,r]
+                    })
+                }
+                const result2 = filtredEncadreurs.filter((f)=>f.zone === action.payload.encadreurType)
+                if(result2.length > 0){
+                    result2.map((r)=>{
+                        filtredEncadreurs2 = [...filtredEncadreurs2,r]
+                    })
+                }
+                state.encadreurs = filtredEncadreurs2
+            }
+            else if(action.payload.subjectType.length  > 0 && action.payload.subjectLvl && action.payload.encadreurType){
+                action.payload.subjectType.map((s)=>{
+                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
+                    if(result.length > 0){
+                        result.map((r)=>{
+                            filtredEncadreurs = [...filtredEncadreurs,r]
+                        })
+                    }
+                })
+                const result2 = filtredEncadreurs.filter((f)=>f.lvl === action.payload.subjectLvl)
+                if(result2.length > 0){
+                    result2.map((r)=>{
+                        filtredEncadreurs2 = [...filtredEncadreurs2,r]
+                    })
+                }
+                const result3 = filtredEncadreurs2.filter((e)=>e.zone === action.payload.encadreurType)
+                if(result3.length > 0){
+                    result3.map((r)=>{
+                        filtredEncadreurs3 = [...filtredEncadreurs3,r]
+                    })
+                }
+            }
+            else{
                 state.encadreurs = state.encadreursCopy
             }
         }

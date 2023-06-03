@@ -21,7 +21,12 @@ const subjectSchema = mongoose.Schema({
     pfeLvl:{
         type:String,
         enum:["L3","M2"]
-    },createdAt : {
+    },
+    subjectType:{
+        type:String,
+        enum:['intern','extern']
+    },
+    createdAt : {
         type:Date,
         default: new Date()
     }

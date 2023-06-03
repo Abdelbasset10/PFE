@@ -117,7 +117,7 @@ const Profile = () => {
                     <div className='flex justify-between items-center' >
                         <div>
                             <h1 className='font-bold' >{user.name}</h1>
-                            <p className='text-pfe-blue' >{user.type}</p>
+                            <p className='text-pfe-blue' >{user.type} {user.type === "teacher" && `(${user.zone})`}</p>
                         </div>
                         {User?.type ==="student" && !user?.isBinome && User?._id !== id && user?.type === "student" && (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={handleAddBinome} >Request Binome</p>
@@ -131,7 +131,7 @@ const Profile = () => {
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={hndleRequestEncadreur} >Request Encadreur</p>
                         )}
                         {User?.type ==="student" && user?.type === "teacher" && User.hisTeacher.includes(user?._id) && User?._id !== id &&  (
-                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>dispatch(removeEncadreur({UserId,binomeId,userId,toast}))} >Request remove Encadreur</p>
+                            <p className='text-pfe-blue hover:underline cursor-pointer h-fit' >My Encadreur</p>
                         )}
                         {User?.type ==="teacher" && user?.type === "student" && User?.studentsVision?.includes(user?._id) && User?._id !== id && (
                             <p className='text-pfe-blue hover:underline cursor-pointer h-fit' onClick={()=>{
@@ -140,7 +140,7 @@ const Profile = () => {
                                 const userId = User?._id
                                 console.log(UserId)
                                 dispatch(removeEncadreur({UserId,binomeId,userId,toast}))}
-                            } >Remove Binome from ur Lists</p>
+                            }>Remove Binome from ur Lists</p>
                         )}
                     </div>
                 </div>

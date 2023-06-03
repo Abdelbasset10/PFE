@@ -3,9 +3,9 @@ const Teacher = require('../models/Teacher')
 
 const createSubject = async (req,res) => {
     try {
-        const {title,description,subjectField,pfeLvl,picture} = req.body
+        const {title,description,subjectField,pfeLvl,picture,subjectType} = req.body
         const newSubject = new Subject({
-            title,description,subjectField,pfeLvl,picture,teacher:req.user.userId,createdAt: new Date().toISOString()
+            title,description,subjectField,pfeLvl,picture,teacher:req.user.userId,subjectType:req.user.zone,createdAt: new Date().toISOString()
         })
         await newSubject.save()
         res.status(201).json(newSubject)

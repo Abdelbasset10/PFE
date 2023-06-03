@@ -201,7 +201,7 @@ const addTeacher = async (req, res) => {
     await teacher.updateOne({ $push: { studentsVision: [me, myBinome] } });
     const updatedTeacher = await Teacher.findById(teacher._id);
     const token = jwt.sign(
-      { userId: updatedTeacher._id, userName: updatedTeacher.name, userType: "teacher" },
+      { userId: updatedTeacher._id, userName: updatedTeacher.name,zone:updatedTeacher.zone, userType: "teacher" },
       "JWT_SECRET",
       { expiresIn: "1d" }
     );
@@ -237,7 +237,7 @@ const removeTeacher = async (req, res) => {
     }
     const updatedTeacher = await Teacher.findById(teacher._id);
     const token = jwt.sign(
-      { userId: updatedTeacher._id, userName: updatedTeacher.name, userType: "teacher" },
+      { userId: updatedTeacher._id, userName: updatedTeacher.name, zone:updatedTeacher.zone, userType: "teacher" },
       "JWT_SECRET",
       { expiresIn: "1d" }
     );

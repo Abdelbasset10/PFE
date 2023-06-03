@@ -33,6 +33,10 @@ const teacherSchema = mongoose.Schema({
     isVision:{
         type:Boolean,
         default:false
+    },
+    zone:{
+        type:String,
+        enum:["intern","extern"]
     }
 },{timestamp:true})
 

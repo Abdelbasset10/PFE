@@ -30,12 +30,11 @@ const signUp = async (req,res) => {
                 const token = jwt.sign({userId:newStudent._id,userName:newStudent.name,userType:'student'},'JWT_SECRET',{expiresIn:'1d'})
                 return res.cookie('token',token).status(201).json({token,user:newStudent})
         }else if(userType === "teacher") {
-                const {name, email, confirmPassword, password} = req.body
-                if(!name || !email || !password || !confirmPassword ){
+                const {name, email, confirmPassword, password, zone} = req.body
+                if(!name || !email || !password || !confirmPassword || !zone ){
                     return res.status(400).json({message:"You have to fill all your informations !"})
                 }
                 const isExistEmail = await Student.findOne({email:email}) || await Teacher.findOne({email}) || await Admin.findOne({email})
-                console.log(isExistEmail)
                 if(isExistEmail) {
                     return res.status(400).json({message:"This Email is Already exists !"})
                 }
@@ -44,10 +43,10 @@ const signUp = async (req,res) => {
                 }
                 const hashPassword = await bcrypt.hash(password,12)
                 const newTeacher = new Teacher({
-                    name,email,password:hashPassword,type:"teacher"
+                    name,email,password:hashPassword,type:"teacher",zone
                 })
                 await newTeacher.save()
-                const token = jwt.sign({userId:newTeacher._id,userName:newTeacher.name,userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
+                const token = jwt.sign({userId:newTeacher._id,userName:newTeacher.name,zone:newTeacher.zone,userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
                 return res.cookie('token',token).status(201).json({token,user:newTeacher})
         }else if(userType === "admin") {
                 const {name, email, confirmPassword, password} = req.body
@@ -108,7 +107,7 @@ const signIn = async (req,res) => {
                 if(!isValidPassword){
                     return res.status(400).json({message:"The password is incorrect !"})
                 }
-                const token = jwt.sign({userId:isExistTeacher._id,userName:isExistTeacher.name,userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
+                const token = jwt.sign({userId:isExistTeacher._id,userName:isExistTeacher.name,zone:isExistTeacher.zone, userType:'teacher'},'JWT_SECRET',{expiresIn:'1d'})
                 return res.cookie('token',token).status(201).json({token,user:isExistTeacher})
         }else if(userType === "admin"){
                 const {email, password} = req.body

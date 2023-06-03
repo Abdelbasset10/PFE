@@ -19,9 +19,7 @@ const LoginForm = () => {
   const handleSubmit =async (e) => {
     e.preventDefault()
     dispatch(login({userInfo,toast,navigate}))
-    setTimeout(()=>{
-      window.location.reload()
-  },[1000])
+  
   }
   return (
     <div>

@@ -31,7 +31,7 @@ const Teachers = () => {
         <Sidebar />
         <div className='flex-[9]  ' >
         <div className='px-4 sm:px-20 py-10 border-l-[1px] border-t-[1px] shadow-lg h-full' >
-            <Filter title="Seatch Your Encadrerur" text="find your Encadreur" />
+            <Filter title="Search Your Encadrerur" text="find your Encadreur" />
             <div className=' overflow-x-visible ' >
             {encadreurs.length === 0 ? (
                 <div>
