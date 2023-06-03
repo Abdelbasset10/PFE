@@ -51,8 +51,8 @@ const Notification = ({notification}) => {
         if(notification?.type === "binome"){
             dispatch(addBinome({userId,UserId,toast}))
         }else{
-            const binomeId = theSender?.hisBinome
-            dispatch(addEncadreur({UserId,binomeId,userId,toast}))
+        
+            dispatch(addEncadreur({UserId,userId,toast}))
         }
         dispatch(acceptNotification(notificationId))
     }

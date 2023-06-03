@@ -79,9 +79,9 @@ export const beNoBinome = createAsyncThunk("beNoBinome/student",async ({userId,U
     }
 })
 
-export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({UserId,binomeId,userId,toast},{rejectWithValue}) => {
+export const addEncadreur = createAsyncThunk("addEncadreur/student",async ({UserId,userId,toast},{rejectWithValue}) => {
     try {
-        const {data} = await api.addEncadreur(UserId,binomeId,userId)
+        const {data} = await api.addEncadreur(UserId,userId)
         toast.info("you have been accept the bimomes!")
         return data
     } catch (error) {

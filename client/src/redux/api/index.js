@@ -24,7 +24,7 @@ export const searchUser = (userName) => API.get(`/student/search?userName=${user
 export const searchNoBinome = (userName) => API.get(`/student/no-binomes/search?userName=${userName}`)
 export const addBinome = (id,userId) => API.patch(`/student/add-binome/${id}`,{studentId:userId}) 
 export const beNoBinome = (id,userId) => API.patch(`/student/be-nobinome/${id}`,{studentId:userId}) 
-export const addEncadreur = (myId,binomeId,teacherId) => API.patch(`/student/add-teacher/${teacherId}`,{myId,binomeId})
+export const addEncadreur = (myId,teacherId) => API.patch(`/student/add-teacher/${teacherId}`,{myId})
 export const removeEncadreur = (myId,binomeId,teacherId) => API.patch(`/student/remove-teacher/${teacherId}`,{myId,binomeId})  
 
 
@@ -54,6 +54,8 @@ export const deletSubject = (id) => API.delete(`/subject/${id}`)
 export const getTeacherSubjects = (id) => API.get(`/subject/subjects/${id}`)
 export const getSubjectByField = (text) => API.get(`/subject/search?field=${text}`)
 export const filterSubjects = (filtredSubjects) => API.get(`/subject/filter`,{subjects:filtredSubjects})
+export const updateSubjectStatus = (subjectId,studentId) => API.patch(`/subject/status/${subjectId}`,{studentId:studentId})
+export const deleteSubjectStatus = (subjectId,studentId) => API.patch(`/subject/status/delete/${subjectId}`,{studentId:studentId})
 
 //Announces
 export const createAnnounce = (announceInfo) => API.post("/announce",announceInfo)
@@ -71,6 +73,7 @@ export const createMessage = (convId,senderId,text) => API.post('/messenger',{co
 //Notifications
 
 export const createNotification = (receiver,type) => API.post('/notification',{receiver,type})
+export const createSubjectNotification = (subjectId,receiver,type) => API.post('/notification/subject',{subjectId,receiver,type})
 export const getUserNotifications = (userId) => API.get(`/notification/${userId}`)
 export const acceptedNotification = (notificationId) => API.patch(`/notification/accept/${notificationId}`)
 export const declinedNotification = (notificationId) => API.patch(`/notification/decline/${notificationId}`)

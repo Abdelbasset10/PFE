@@ -179,20 +179,20 @@ const BeNoBinome = async (req, res) => {
 const addTeacher = async (req, res) => {
   try {
     const { id } = req.params;
-    const { myId, binomeId } = req.body;
+    const { myId} = req.body;
     const me = await Student.findById(myId);
     if (!me.isBinome) {
         return res
         .status(400)
         .json({ message: "You have to find Binome before request Encadreur!" });
     }
-    const myBinome = await Student.findById(binomeId);
+    const myBinome = await Student.findById(me.hisBinome);
     const teacher = await Teacher.findById(id);
     if (!teacher) {
       return res.status(404).json({ message: "This teacher does not exist !" });
     }
     if (me.hisTeacher.includes(teacher._id)) {
-      return res
+        return res
         .status(400)
         .json({ message: "This Teacher is already in your encadreurs" });
     }
@@ -216,11 +216,7 @@ const removeTeacher = async (req, res) => {
     const { id } = req.params;
     const { myId, binomeId } = req.body;
     const me = await Student.findById(myId);
-    if (!me.isBinome) {
-      return res
-        .status(400)
-        .json({ message: "You have to find Binome before request Encadreur!" });
-    }
+    
     const myBinome = await Student.findById(binomeId);
     const teacher = await Teacher.findById(id);
     if (!teacher) {
@@ -232,9 +228,13 @@ const removeTeacher = async (req, res) => {
         .json({ message: "This Teacher is not in your encadreurs list" });
     }
     await me.updateOne({ $pull: { hisTeacher: teacher._id } });
-    await myBinome.updateOne({ $pull: { hisTeacher: teacher._id } });
+    if(myBinome){
+      await myBinome.updateOne({ $pull: { hisTeacher: teacher._id } });
+    }
     await teacher.updateOne({ $pull: { studentsVision: me._id } });
-    await teacher.updateOne({ $pull: { studentsVision: myBinome._id } });
+    if(myBinome){
+      await teacher.updateOne({ $pull: { studentsVision: myBinome._id } });
+    }
     const updatedTeacher = await Teacher.findById(teacher._id);
     const token = jwt.sign(
       { userId: updatedTeacher._id, userName: updatedTeacher.name, userType: "teacher" },
