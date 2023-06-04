@@ -8,7 +8,6 @@ import { filterEncadreurs } from '../redux/features/teacherSlice'
 
 const Choices = () => {
     const {pathname} = useLocation()
-    console.log(pathname)
     const dispatch = useDispatch()
     const [filtredSubjects,setFiltredSubjects] = useState({
         subjectType:[],

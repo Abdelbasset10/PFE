@@ -45,6 +45,7 @@ const Binomes = () => {
                         </tr>
                         {noBinomes?.map((p,index)=>{
                             if(p?._id !== UserId){
+                            
                             return (
                                 
                                     <tr key={index}  className="cursor-pointer hover:bg-[#F9F9F9] " onClick={()=>navigate(`/profile/${p._id}`)} >
@@ -53,7 +54,7 @@ const Binomes = () => {
                                         <p>{p.name}</p>
                                     </td>
                                     <td className='py-2  ' >{p.lvl}</td>
-                                    <td className='py-2  ' >{p.pfeType ? p.pfeType : 'Not Selected yet'}</td>
+                                    <td className='py-2  ' >{p.pfeType?.length >0 ? p.pfeType.map((p)=> `${p},`) : 'Not Selected yet'}</td>
                                     <td className='py-2 ' >{p.section}</td>
                                     <td className='py-2  ' >
                                         <div className='p-2 bg-[#F9F9F9] hover:bg-pfe-blue rounded-lg w-fit' >

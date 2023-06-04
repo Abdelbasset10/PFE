@@ -12,7 +12,7 @@ import FileInput from './FileInput'
 const ProfileModal = () => {
     const dispatch = useDispatch()
     const [userInfo,setUserInfo] = useState({
-        name:"",email:"",section:"",lvl:"",profilePicture:"",pfeType:"",
+        name:"",email:"",section:"",lvl:"",profilePicture:"",pfeType:[],
     })
 
     const User = useSelector((state)=>state.auth?.authData?.user)
@@ -25,12 +25,23 @@ const ProfileModal = () => {
     const handleChange = (e) => {
         setUserInfo({...userInfo,[e.target.name]:e.target.value})
     }
+
+    const handleSetType = (e) => {
+        if(e.target.checked && !userInfo.pfeType.includes(e.target.name)){
+            setUserInfo({...userInfo,pfeType:[...userInfo.pfeType,e.target.name]})
+        }else  {
+            setUserInfo({...userInfo,pfeType:userInfo.pfeType.filter((f)=>f !== e.target.name)})
+        }
+        
+    }
+    
     const handleInputState = (name, value) => {
         setUserInfo((prev) => ({ ...prev, [name]: value }));
     };
 
     const userId = User?._id
     
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if(User.type ==="student"){
@@ -108,12 +119,12 @@ const ProfileModal = () => {
                                 <label>{User?.type === "student" ? "Choose your lvl" : "choose pfe type lvl"}</label>
                                 <div className='flex gap-8' >
                                     <div className='flex gap-1' >
-                                    <label>L3</label>
-                                    <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"L3"})} />
+                                        <label>L3</label>
+                                    <input type="radio" name='userLvl' checked={userInfo.lvl === "L3"} onChange={()=>setUserInfo({...userInfo,lvl:"L3"})} />
                                     </div>
                                     <div className='flex gap-1' >
-                                    <label>M2</label>
-                                    <input type="radio" name='userLvl' onChange={()=>setUserInfo({...userInfo,lvl:"M2"})} />
+                                        <label>M2</label>
+                                    <input type="radio" name='userLvl' checked={userInfo.lvl === "M2"} onChange={()=>setUserInfo({...userInfo,lvl:"M2"})} />
                                     </div>
                                 </div>
                             </div>
@@ -134,19 +145,19 @@ const ProfileModal = () => {
                     <label>Choose Your PFE Type</label>
                         <div className='grid grid-cols-2' >
                             <div className='flex gap-2' >
-                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"web"})} />
+                                <input type="checkbox" name="web" checked={userInfo.pfeType.some((s)=>s === "web")}  onChange={handleSetType} />
                                 <label>web</label>
                             </div>
                             <div className='flex gap-2' >
-                                <input type="checkbox"    onChange={(e)=> setUserInfo({...userInfo,pfeType:"mobile"})} />
+                                <input type="checkbox"  name="mobile" checked={userInfo.pfeType.some((s)=>s === "mobile")}  onChange={handleSetType} />
                                 <label>mobile</label>
                             </div>
                             <div className='flex gap-2' >
-                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"ai"})} />
+                                <input type="checkbox" name="ai" checked={userInfo.pfeType.some((s)=>s === "ai")}  onChange={handleSetType} />
                                 <label>ai</label>
                             </div>
                             <div className='flex gap-2' >
-                                <input type="checkbox"   onChange={(e)=> setUserInfo({...userInfo,pfeType:"cyber"})} />
+                                <input type="checkbox" name='cyber' checked={userInfo.pfeType.some((s)=>s === "cyber")} onChange={handleSetType} />
                                 <label>cyber</label>
                             </div>
                         </div>

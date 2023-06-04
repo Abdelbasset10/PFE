@@ -98,12 +98,17 @@ const teacherslice = createSlice({
             console.log(action.payload)
             if(action.payload.subjectType.length > 0 && !action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
-                    if(result.length > 0){
-                        result.map((r)=>{
-                            filtredEncadreurs = [...filtredEncadreurs,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.encadreursCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        if(result.length >0){
+                                const isExist = filtredEncadreurs.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredEncadreurs = [...filtredEncadreurs,b]
+                                }                    
+                        }
+                    })           
                 })
                 state.encadreurs = filtredEncadreurs
             }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && !action.payload.encadreurType){
@@ -116,12 +121,19 @@ const teacherslice = createSlice({
                 state.encadreurs = filtredEncadreurs
             }else if(action.payload.subjectType.length >0 && action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
-                    if(result.length > 0){
-                        result.map((r)=>{
-                            filtredEncadreurs = [...filtredEncadreurs,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.encadreursCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        console.log(result)
+                        if(result.length >0){
+                                const isExist = filtredEncadreurs.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredEncadreurs = [...filtredEncadreurs,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 const result2 = filtredEncadreurs.filter((f)=>f.lvl === action.payload.subjectLvl)
                 if(result2.length > 0){
@@ -141,12 +153,18 @@ const teacherslice = createSlice({
             }
             else if(action.payload.subjectType.length  > 0 && !action.payload.subjectLvl && action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
-                    if(result.length > 0){
-                        result.map((r)=>{
-                            filtredEncadreurs = [...filtredEncadreurs,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.encadreursCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        if(result.length >0){
+                                const isExist = filtredEncadreurs.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredEncadreurs = [...filtredEncadreurs,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 const result2 = filtredEncadreurs.filter((f)=>f.zone === action.payload.encadreurType)
                 if(result2.length > 0){
@@ -174,12 +192,17 @@ const teacherslice = createSlice({
             }
             else if(action.payload.subjectType.length  > 0 && action.payload.subjectLvl && action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.encadreursCopy.filter((f)=>f.pfeType === s)
-                    if(result.length > 0){
-                        result.map((r)=>{
-                            filtredEncadreurs = [...filtredEncadreurs,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.encadreursCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        if(result.length >0){
+                                const isExist = filtredEncadreurs.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredEncadreurs = [...filtredEncadreurs,b]
+                                }
+                        }
+                    })           
                 })
                 const result2 = filtredEncadreurs.filter((f)=>f.lvl === action.payload.subjectLvl)
                 if(result2.length > 0){

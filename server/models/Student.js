@@ -38,9 +38,9 @@ const studentSchema = mongoose.Schema({
     hisBinome:{type:mongoose.Schema.Types.ObjectId, ref:'Student'},
     hisTeacher:[{type:mongoose.Schema.Types.ObjectId, ref:'Teacher'}],
     pfeType:{
-        type:String,
-        enum:['web','mobile','ai','cyber',''],
-        default:'',
+        type:[String],
+        enum:['web','mobile','ai','cyber'],
+        default:[],
     },
     hisSubject:{
         title:{

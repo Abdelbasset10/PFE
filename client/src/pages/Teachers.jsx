@@ -9,13 +9,14 @@ import Filter from '../components/Filter'
 import { useDispatch, useSelector } from 'react-redux'
 import { allEncadreurs, beNoVision, beVision } from '../redux/features/teacherSlice'
 import {toast} from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 
 const Teachers = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const {pathname} = useLocation()
     const [show,setShow] = useState(false)
     const User = useSelector((state)=>state.auth?.authData?.user)
     const id = User?._id
@@ -32,19 +33,20 @@ const Teachers = () => {
         <div className='flex-[9]  ' >
         <div className='px-4 sm:px-20 py-10 border-l-[1px] border-t-[1px] shadow-lg h-full' >
             <Filter title="Search Your Encadrerur" text="find your Encadreur" />
-            <div className=' overflow-x-visible ' >
             {encadreurs.length === 0 ? (
                 <div>
                     <p>There is no Encadreurs for this moment...</p>
                 </div>
 
             ): (
-                <table className='w-full text-left' >
+                <div className= {` ${(pathname === '/teachers' && User?.type==="teacher") ? 'max-h-[60%]' : 'max-h-[70%]' } overflow-y-auto`}   >
+                    <table className='w-full text-left' >
                     <tbody>
                     <tr className='text-pfe-blue' >
                         <th className='' >Teacher</th>
                         <th className=''>Level</th>
                         <th className=''>PFE Type</th>
+                        <th>Encadreur Type</th>
                         <th className=''>Contact</th>
                     </tr>
                     {encadreurs.map((p)=>{
@@ -55,7 +57,8 @@ const Teachers = () => {
                                     <p>{p.name}</p>
                                 </td>
                                 <td className='py-2 ' >{p.lvl ? p.lvl : "Not Selected Yet"}</td>
-                                <td className='py-2 ' >{p.pfeType ? p.pfeType : "Not Selected Yet"}</td>
+                                <td className='py-2  ' >{p.pfeType.length >0 ? p.pfeType.map((p)=> `${p},`) : 'Not Selected yet'}</td>
+                                <td className='py-2' >{p.zone}</td>
                                 <td className='py-2  ' >
                                     <div className='p-2 bg-[#F9F9F9] hover:bg-pfe-blue rounded-lg w-fit' >
                                         <MdMessage className='text-xl text-pfe-blue hover:text-pfe-white   ' />
@@ -66,6 +69,7 @@ const Teachers = () => {
                     })}
                     </tbody>
             </table>
+                </div>
             )}
             {User?.type ==="teacher" && !User?.isVision && (
                 <div className='flex justify-end ' >
@@ -84,7 +88,7 @@ const Teachers = () => {
                 </div>  
             )}
             
-            </div>
+           
         </div>
         </div>
     </div>

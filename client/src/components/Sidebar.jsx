@@ -47,10 +47,6 @@ const Sidebar = () => {
                 )}
             </div>
             <div className='flex flex-col gap-4' >
-                <div className='flex items-center gap-2 md:px-2 lg:px-6 py-1 hover:text-pfe-blue' >
-                    <MdSettings />
-                    <p>Settings</p>
-                </div>
                 <div className='flex items-center gap-2 md:px-2 lg:px-6 py-1 rounded-lg hover:text-pfe-blue' onClick={()=>dispatch(logOut())} >
                     <BiLogOutCircle />
                     <Link to='/login'>LogOut</Link>

@@ -50,10 +50,6 @@ const SidebarMobile = ({setShowSide}) => {
                 )}
             </div>
             <div className='flex flex-col gap-4' >
-                <div className='flex items-center gap-2 px-4 py-2 text-pfe-white' >
-                    <MdSettings className='text-pfe-white text-xl'  />
-                    <Link to='/subjects' >Settings</Link>
-                </div>
                 <div className='flex items-center gap-2 px-4 py-2 rounded-lg text-pfe-white' onClick={()=>dispatch(logOut())}>
                     <BiLogOutCircle className='text-pfe-white text-xl'  />
                     <Link to='/login' >Log Ou</Link>

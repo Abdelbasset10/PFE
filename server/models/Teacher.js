@@ -22,8 +22,9 @@ const teacherSchema = mongoose.Schema({
         default:""
     },
     pfeType:{
-        type:String,
+        type:[String],
         enum:['web','mobile','ai','cyber'],
+        default:[]
     },
     lvl:{
         type:String,

@@ -157,7 +157,7 @@ const Profile = () => {
                     </div>
                     {user.type === "teacher" && (
                         <div >
-                            <p>Type : <span className='text-pfe-blue hover:underline cursor-pointer'>{user.pfeType ? user.pfeType : 'Not Selected yet'}</span> </p>
+                            <p>Type : <span className='text-pfe-blue hover:underline cursor-pointer'>{user.pfeType.length>0 ? user.pfeType.map((p)=>`${p}, `) : 'Not Selected yet'}</span> </p>
                             <div className='flex gap-2' >
                                 <p>Students :</p> 
                                 <div className='text-pfe-blue flex flex-col gap-2'>
@@ -194,6 +194,7 @@ const Profile = () => {
                             </div>
                             <p>Level : <span className='text-pfe-blue' >{user?.lvl}</span></p>
                             <p>Section : <span className='text-pfe-blue' >{user?.section}</span></p>
+                            <p>Type : <span className='text-pfe-blue hover:underline cursor-pointer'>{user.pfeType.length>0 ? user.pfeType.map((p)=>`${p}, `) : 'Not Selected yet'}</span> </p>
                         </div>
                     )}
                     

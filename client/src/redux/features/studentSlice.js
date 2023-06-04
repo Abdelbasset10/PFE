@@ -129,14 +129,20 @@ const studentSlice = createSlice({
                 })
                 state.noBinomes = filtredBinomes
             }else if(action.payload.section.length === 0 && action.payload.subjectType.length > 0 && !action.payload.studentLvl){
-                console.log("pfetype")
                 action.payload.subjectType.map((s)=>{
-                    const result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
-                    if(result.length >0){
-                        result.map((r)=>{
-                            filtredBinomes = [...filtredBinomes,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.noBinomesCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        console.log(result)
+                        if(result.length >0){
+                                const isExist = filtredBinomes.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredBinomes = [...filtredBinomes,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 state.noBinomes = filtredBinomes
             }else if(action.payload.section.length === 0 && action.payload.subjectType.length === 0 && action.payload.studentLvl){
@@ -159,12 +165,19 @@ const studentSlice = createSlice({
                     }
                 })
                 action.payload.subjectType.map((s)=>{
-                    const result2 = filtredBinomes.filter((f)=>f.pfeType === s)
-                    if(result2.length >0){
-                        result2.map((r)=>{
-                            filtredBinomes2 = [...filtredBinomes2,r]
-                        })
-                    }
+                    let result2
+                    //  result2 = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    filtredBinomes.map((b)=>{
+                        result2 = b.pfeType.filter((d)=>d ===s)
+                        console.log(result2)
+                        if(result2.length >0){
+                                const isExist = filtredBinomes2.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredBinomes2 = [...filtredBinomes2,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 state.noBinomes = filtredBinomes2
             }else if(action.payload.section.length > 0 && action.payload.subjectType.length === 0 && action.payload.studentLvl){
@@ -187,12 +200,19 @@ const studentSlice = createSlice({
             }else if(action.payload.section.length === 0 && action.payload.subjectType.length > 0 && action.payload.studentLvl){
                 console.log("pfetype + lvl")
                 action.payload.subjectType.map((s)=>{
-                    const result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
-                    if(result.length >0){
-                        result.map((r)=>{
-                            filtredBinomes = [...filtredBinomes,r]
-                        })
-                    }
+                    let result
+                    //  result = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    state.noBinomesCopy.map((b)=>{
+                        result = b.pfeType.filter((d)=>d ===s)
+                        console.log(result)
+                        if(result.length >0){
+                                const isExist = filtredBinomes.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredBinomes = [...filtredBinomes,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 const result2 = filtredBinomes.filter((f)=>f.lvl === action.payload.studentLvl)
                 if(result2.length >0){
@@ -211,12 +231,19 @@ const studentSlice = createSlice({
                     }
                 })
                 action.payload.subjectType.map((s)=>{
-                    const result2 = filtredBinomes.filter((f)=>f.pfeType === s)
-                    if(result2){
-                        result2.map((r)=>{
-                            filtredBinomes2 = [...filtredBinomes2,r]
-                        })
-                    }
+                    let result2
+                    //  result2 = state.noBinomesCopy.filter((f)=>f.pfeType === s)
+                    filtredBinomes.map((b)=>{
+                        result2 = b.pfeType.filter((d)=>d ===s)
+                        console.log(result2)
+                        if(result2.length >0){
+                                const isExist = filtredBinomes2.find((f)=>f._id === b._id)
+                                if(!isExist){
+                                    filtredBinomes2 = [...filtredBinomes2,b]
+                                }
+                            
+                        }
+                    })           
                 })
                 const result3 = filtredBinomes2.filter((f)=>f.lvl === action.payload.studentLvl)
                 if(result3){
@@ -227,10 +254,8 @@ const studentSlice = createSlice({
                 state.noBinomes = filtredBinomes3
             }else{
                 state.noBinomes = state.noBinomesCopy
-            }
-            
+            }     
         }
-
     },
     extraReducers:{
         [allStudents.pending] : (state,action) => {
