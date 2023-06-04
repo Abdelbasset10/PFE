@@ -56,6 +56,9 @@ export const getSubjectByField = (text) => API.get(`/subject/search?field=${text
 export const filterSubjects = (filtredSubjects) => API.get(`/subject/filter`,{subjects:filtredSubjects})
 export const updateSubjectStatus = (subjectId,studentId) => API.patch(`/subject/status/${subjectId}`,{studentId:studentId})
 export const deleteSubjectStatus = (subjectId,studentId) => API.patch(`/subject/status/delete/${subjectId}`,{studentId:studentId})
+export const cacheSubject = (subjectId) => API.patch(`/subject/cache/${subjectId}`)
+export const getCachedSubjects = () => API.get('/subject/cached')
+export const getNoCachedSubjects = () => API.get('/subject/no-cached')
 
 //Announces
 export const createAnnounce = (announceInfo) => API.post("/announce",announceInfo)

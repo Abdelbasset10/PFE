@@ -95,6 +95,7 @@ const getSubjectByField = async (req,res) => {
         res.status(404).json({message:error.message})
     }
 }
+
 const filterSubjects = async (req,res) => {
     try {
         const {filtredSubjects} = req.body;
@@ -109,4 +110,32 @@ const filterSubjects = async (req,res) => {
     }
 }
 
-module.exports = {createSubject, getAllSubjects, getTeacherSubjects, updateSubject, deleteSubject, getSubjectByField, filterSubjects}
+const cacheSubject = async (req,res) => {
+    try {
+        const {id} = req.params
+        const getSubjectAndCache = await Subject.findByIdAndUpdate(id,{isCached:true},{new:true})
+        res.status(200).json(getSubjectAndCache)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+const getCachedSubject = async (req,res) => {
+    try {
+        const cachedSubjects = await Subject.find({isCached:true})
+        res.status(200).json(cachedSubjects)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+const getNoCachedSubject = async (req,res) => {
+    try {
+        const noCachedSubjects = await Subject.find({isCached:false})
+        res.status(200).json(noCachedSubjects)
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
+module.exports = {createSubject, getAllSubjects, getTeacherSubjects, updateSubject, deleteSubject, getSubjectByField, filterSubjects, cacheSubject, getCachedSubject, getNoCachedSubject}

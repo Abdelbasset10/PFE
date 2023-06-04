@@ -29,10 +29,13 @@ const subjectSchema = mongoose.Schema({
     createdAt : {
         type:Date,
         default: new Date()
+    },
+    isCached:{
+        type:Boolean,
+        default:false
     }
-  },
-  
-  { timestamps: true }
+    },
+    { timestamps: true }
 )
 
 module.exports = mongoose.model('Subject',subjectSchema)

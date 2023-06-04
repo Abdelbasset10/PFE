@@ -59,7 +59,7 @@ const Choices = () => {
         }
     }
     return (
-    <div className='w-[310px] bg-pfe-white border-[1px] rounded-lg shadow-lg absolute right-0 top-12' >
+    <div className='w-[310px] z-20 bg-pfe-white border-[1px] rounded-lg shadow-lg absolute right-0 top-12' >
                         <div className='flex flex-col gap-4 py-4 px-4' >
                             {pathname === '/binomes' && (
                             <div>

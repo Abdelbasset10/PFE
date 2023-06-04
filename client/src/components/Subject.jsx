@@ -6,7 +6,7 @@ import imgDefault from '../assets/user.png'
 import { getTeacher } from '../redux/api'
 import {openUpdateSubjectModal} from '../redux/features/modalSlice'
 import Modal from './Modal'
-import { allSubjects, deleteSubject } from '../redux/features/subjectSlice'
+import { allSubjects, cacheSubject, deleteSubject, getNoCachedSubjects } from '../redux/features/subjectSlice'
 import {toast} from 'react-toastify'
 import moment from 'moment'
 
@@ -34,6 +34,11 @@ const Subject = ({s}) => {
     getTheTeacher()
   },[s])
 
+  const handleCacheSubject = () => {
+    dispatch(cacheSubject({subjectId,toast}))
+    dispatch(getNoCachedSubjects())
+  }
+
   const desc = s?.description.split(' ');
 
   const renderDescription = () => {
@@ -49,6 +54,8 @@ const Subject = ({s}) => {
       }
     });
   };
+
+  
 
   const text = renderDescription()
   const slicedText = text.splice(0,40)
@@ -72,6 +79,7 @@ const Subject = ({s}) => {
                 <div className='flex flex-col gap-2 bg-pfe-blue text-pfe-white px-8 py-4 absolute top-6 right-0' >
                   <p className='cursor-pointer hover:text-blue-200' onClick={()=>dispatch(openUpdateSubjectModal(s._id))} >Update</p>
                   <p className='cursor-pointer hover:text-blue-200' onClick={handleDeleteubject} >Delete</p>
+                  <p className='cursor-pointer hover:text-blue-200' onClick={handleCacheSubject} >Cache</p>
                 </div>
               )}
             </div>

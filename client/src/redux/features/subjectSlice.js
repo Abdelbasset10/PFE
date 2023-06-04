@@ -67,11 +67,35 @@ export const goFilter = createAsyncThunk("filterSubjects/subject", async (filtre
     }
 })
 
+export const cacheSubject = createAsyncThunk("cacheSubject/subject", async ({subjectId,toast},{rejectWithValue}) => {
+    try {
+        const {data} = await api.cacheSubject(subjectId)
+        toast.info("subject has been cached!")
+        return data
+    } catch (error) {
+        toast.error(error.response.data.message)
+        return rejectWithValue(error.response.data)
+    }
+})
+
+export const getNoCachedSubjects = createAsyncThunk("getNoCachedSubjects/subject", async (_,{rejectWithValue}) => {
+    try {
+        const {data} = await api.getNoCachedSubjects()
+        return data
+    } catch (error) {
+        toast.error(error.response.data.message)
+        return rejectWithValue(error.response.data)
+    }
+})
+
 const subjectSlice = createSlice({
     name:"subject",
     initialState:{
         subjects:[],
         subjectsCopy:[],
+        cachedSubject : [],
+        noCachedSubject : [],
+        noCachedSubjectCopy : [],
         isLoading :false,
         error:"",
     },
@@ -82,25 +106,25 @@ const subjectSlice = createSlice({
             let filtredSubjects3 = []
             if(action.payload.subjectType.length>0 && !action.payload.subjectLvl && !action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
+                    const result = state.noCachedSubjectCopy.filter((ss)=>ss.subjectField === s)
                     if(result.length >0){
                         result.map((r)=>{
                             filtredSubjects1 = [...filtredSubjects1,r]
                         })
                     }
                 })
-                state.subjects = filtredSubjects1
+                state.noCachedSubject = filtredSubjects1
             }else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && !action.payload.encadreurType){
-                const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
+                const result = state.noCachedSubjectCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
                 if(result.length >0){
                     result.map((r)=>{
                         filtredSubjects1 = [...filtredSubjects1,r]
                     })
                 }
-                state.subjects = filtredSubjects1
+                state.noCachedSubject = filtredSubjects1
             }else if(action.payload.subjectType.length>0 && action.payload.subjectLvl && !action.payload.encadreurType){
                 
-                const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
+                const result = state.noCachedSubjectCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
                 if(result.length >0){
                     result.map((r)=>{
                         filtredSubjects1 = [...filtredSubjects1,r]
@@ -114,19 +138,19 @@ const subjectSlice = createSlice({
                         })
                     }
                 })
-                state.subjects = filtredSubjects2
+                state.noCachedSubject = filtredSubjects2
             }else if(action.payload.subjectType.length === 0 && !action.payload.subjectLvl && action.payload.encadreurType){
-                const result = state.subjectsCopy.filter((s)=>s.subjectType === action.payload.encadreurType)
+                const result = state.noCachedSubjectCopy.filter((s)=>s.subjectType === action.payload.encadreurType)
                 if(result.length >0){
                     result.map((r)=>{
                         filtredSubjects1 = [...filtredSubjects1,r]
                     })
                 }
-                state.subjects = filtredSubjects1
+                state.noCachedSubject = filtredSubjects1
             }
             else if(action.payload.subjectType.length > 0 && !action.payload.subjectLvl && action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
+                    const result = state.noCachedSubjectCopy.filter((ss)=>ss.subjectField === s)
                     if(result.length >0){
                         result.map((r)=>{
                             filtredSubjects1 = [...filtredSubjects1,r]
@@ -139,10 +163,10 @@ const subjectSlice = createSlice({
                         filtredSubjects2 = [...filtredSubjects2,r]
                     })
                 }
-                state.subjects = filtredSubjects2
+                state.noCachedSubject = filtredSubjects2
             }
             else if(action.payload.subjectType.length === 0 && action.payload.subjectLvl && action.payload.encadreurType){
-                const result = state.subjectsCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
+                const result = state.noCachedSubjectCopy.filter((s)=>s.pfeLvl === action.payload.subjectLvl)
                 if(result.length >0){
                     result.map((r)=>{
                         filtredSubjects1 = [...filtredSubjects1,r]
@@ -154,11 +178,11 @@ const subjectSlice = createSlice({
                         filtredSubjects2 = [...filtredSubjects2,r]
                     })
                 }
-                state.subjects = filtredSubjects2
+                state.noCachedSubject = filtredSubjects2
             }
             else if(action.payload.subjectType.length > 0 && action.payload.subjectLvl && action.payload.encadreurType){
                 action.payload.subjectType.map((s)=>{
-                    const result = state.subjectsCopy.filter((ss)=>ss.subjectField === s)
+                    const result = state.noCachedSubjectCopy.filter((ss)=>ss.subjectField === s)
                     if(result.length >0){
                         result.map((r)=>{
                             filtredSubjects1 = [...filtredSubjects1,r]
@@ -177,10 +201,10 @@ const subjectSlice = createSlice({
                         filtredSubjects3 = [...filtredSubjects3,r]
                     })
                 }
-                state.subjects = filtredSubjects3
+                state.noCachedSubject = filtredSubjects3
             }
             else{
-                state.subjects = state.subjectsCopy
+                state.noCachedSubject = state.noCachedSubjectCopy
             }
             
         } 
@@ -254,6 +278,29 @@ const subjectSlice = createSlice({
             state.subjects = action.payload
         },
         [goFilter.rejected] : (state,action) => {
+            state.isLoading = false,
+            state.error = action.payload?.message
+        },
+        [cacheSubject.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [cacheSubject.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.cachedSubject = [...state.cachedSubject,action.payload]
+        },
+        [cacheSubject.rejected] : (state,action) => {
+            state.isLoading = false,
+            state.error = action.payload?.message
+        },
+        [getNoCachedSubjects.pending] : (state,action) => {
+            state.isLoading = true
+        },
+        [getNoCachedSubjects.fulfilled] : (state,action) => {
+            state.isLoading = false
+            state.noCachedSubject = action.payload
+            state.noCachedSubjectCopy = action.payload
+        },
+        [getNoCachedSubjects.rejected] : (state,action) => {
             state.isLoading = false,
             state.error = action.payload?.message
         }

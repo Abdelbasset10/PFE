@@ -54,7 +54,6 @@ const signUp = async (req,res) => {
                     return res.status(400).json({message:"You have to fill all your informations !"})
                 }
                 const isExistEmail = await Student.findOne({email:email}) || await Teacher.findOne({email}) || await Admin.findOne({email})
-                console.log(isExistEmail)
                 if(isExistEmail) {
                     return res.status(400).json({message:"This Email is Already exists !"})
                 }
